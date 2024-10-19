@@ -7,9 +7,9 @@ services:
     restart: always
     environment:
       - MYSQL_DATABASE=web_cv
-      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_ROOT_PASSWORD=
     ports:
-      - '3307:3306'
+      - '3308:3306'
     expose:
       - 3306
   backend:
@@ -18,13 +18,13 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     environment:
-      - DB_PORT=3307
+      - DB_PORT=3308
       - DB_HOSTNAME=web_cv
-      - REACT_URL=localhost
-      - REACT_USERNAME =root
-      - REACT_PASSWORD =123
+      - REACT_URL= localhost
+      - REACT_USERNAME = root
+      - REACT_PASSWORD = 
       - DB_DIALECT = mysql
-    # - DB_HOSTNAME=host.docker.internal
+      - DB_HOSTNAME=host.docker.internal
     ports:
       - 5000:5000
   nginx:
