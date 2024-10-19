@@ -6,10 +6,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 require('dotenv').config();
 var Sequelize = require("sequelize");
-var sequelize = new Sequelize("".concat(process.env.DB_DATABASE), "".concat(process.env.DB_USERNAME), "".concat(process.env.DB_PASSWORD), {
-  host: "".concat(process.env.DB_HOSTNAME),
-  port: "".concat(process.env.DB_PORT),
-  dialect: "".concat(process.env.DB_DIALECT)
+var sequelize = new Sequelize("web_cv", "root", "123", {
+  host: "localhost",
+  port: "3306",
+  dialect: "mysql"
 });
 var connectDB = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -17,6 +17,7 @@ var connectDB = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           try {
+            console.log("hehe", sequelize);
             sequelize.authenticate().then(function () {
               console.log('Connection has been established successfully.');
             })["catch"](function (error) {

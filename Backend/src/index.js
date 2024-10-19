@@ -9,7 +9,13 @@ const http = require('http');
 require('dotenv').config()
 
 
+
+
 const app = express();
+
+
+
+
 
 const server = http.createServer(app);
 const io = socketIo(server, {
@@ -26,7 +32,7 @@ app.use(bodyParser.json())
 
 
 const corsOptions ={
-    origin:`${process.env.REACT_URL}`, 
+    origin:`http://localhost`, 
     credentials:true,       
 }
 app.use(cors(corsOptions));

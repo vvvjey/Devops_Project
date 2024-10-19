@@ -16,13 +16,13 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Objec
 var _require = require('sequelize'),
   Model = _require.Model;
 module.exports = function (sequelize, DataTypes) {
-  var User = /*#__PURE__*/function (_Model) {
-    _inherits(User, _Model);
-    function User() {
-      _classCallCheck(this, User);
-      return _callSuper(this, User, arguments);
+  var Chat = /*#__PURE__*/function (_Model) {
+    _inherits(Chat, _Model);
+    function Chat() {
+      _classCallCheck(this, Chat);
+      return _callSuper(this, Chat, arguments);
     }
-    _createClass(User, null, [{
+    _createClass(Chat, null, [{
       key: "associate",
       value:
       /**
@@ -31,34 +31,31 @@ module.exports = function (sequelize, DataTypes) {
        * The `models/index` file will call this method automatically.
        */
       function associate(models) {
-        User.hasOne(models.Cart, {
-          foreignKey: "userId",
-          sourceKey: "id"
-        });
-        User.hasMany(models.Chat, {
+        Chat.belongsTo(models.User, {
           foreignKey: "receiverId",
-          sourceKey: "id",
-          as: "ReceivedChats"
+          targetKey: "id",
+          as: "UserB"
         });
-        User.hasMany(models.Chat, {
+        Chat.belongsTo(models.User, {
           foreignKey: "senderId",
-          sourceKey: "id",
-          as: "SentChats"
+          targetKey: "id",
+          as: "UserA"
         });
       }
     }]);
-    return User;
+    return Chat;
   }(Model);
-  User.init({
-    email: DataTypes.STRING,
-    username: DataTypes.STRING,
-    address: DataTypes.STRING,
-    password: DataTypes.STRING,
-    refreshToken: DataTypes.STRING,
-    role: DataTypes.STRING
+  Chat.init({
+    chatId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    senderId: DataTypes.INTEGER,
+    receiverId: DataTypes.INTEGER
   }, {
     sequelize: sequelize,
-    modelName: 'User'
+    modelName: 'Chat'
   });
-  return User;
+  return Chat;
 };

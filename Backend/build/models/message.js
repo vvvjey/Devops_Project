@@ -16,13 +16,13 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Objec
 var _require = require('sequelize'),
   Model = _require.Model;
 module.exports = function (sequelize, DataTypes) {
-  var User = /*#__PURE__*/function (_Model) {
-    _inherits(User, _Model);
-    function User() {
-      _classCallCheck(this, User);
-      return _callSuper(this, User, arguments);
+  var Message = /*#__PURE__*/function (_Model) {
+    _inherits(Message, _Model);
+    function Message() {
+      _classCallCheck(this, Message);
+      return _callSuper(this, Message, arguments);
     }
-    _createClass(User, null, [{
+    _createClass(Message, null, [{
       key: "associate",
       value:
       /**
@@ -30,35 +30,22 @@ module.exports = function (sequelize, DataTypes) {
        * This method is not a part of Sequelize lifecycle.
        * The `models/index` file will call this method automatically.
        */
-      function associate(models) {
-        User.hasOne(models.Cart, {
-          foreignKey: "userId",
-          sourceKey: "id"
-        });
-        User.hasMany(models.Chat, {
-          foreignKey: "receiverId",
-          sourceKey: "id",
-          as: "ReceivedChats"
-        });
-        User.hasMany(models.Chat, {
-          foreignKey: "senderId",
-          sourceKey: "id",
-          as: "SentChats"
-        });
-      }
+      function associate(models) {}
     }]);
-    return User;
+    return Message;
   }(Model);
-  User.init({
-    email: DataTypes.STRING,
-    username: DataTypes.STRING,
-    address: DataTypes.STRING,
-    password: DataTypes.STRING,
-    refreshToken: DataTypes.STRING,
-    role: DataTypes.STRING
+  Message.init({
+    messageId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    senderId: DataTypes.INTEGER,
+    chatId: DataTypes.INTEGER,
+    text: DataTypes.STRING
   }, {
     sequelize: sequelize,
-    modelName: 'User'
+    modelName: 'Message'
   });
-  return User;
+  return Message;
 };
