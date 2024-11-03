@@ -13,8 +13,8 @@ pipeline {
             steps {
                 // This step should not normally be used in your script. Consult the inline help for details.
                 withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') {
-                    sh 'docker build -t production -f Dockerfile .'
-                    sh 'docker push production'
+                    sh 'docker build -t napeno/production -f Dockerfile .'
+                    sh 'docker push napeno/production'
                 }
             }
         }
