@@ -5,8 +5,8 @@ module.exports= {
     username: 'root',
     password: '123',
     database: 'web_cv',
-    host: 'host.docker.internal',
-    port:'3308',
+    host: 'localhost',
+    port:'3306',
     dialect: 'mysql'
   },
   test: {

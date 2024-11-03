@@ -9,16 +9,16 @@ services:
       - MYSQL_DATABASE=web_cv
       - MYSQL_ROOT_PASSWORD=123
     ports:
-      - '3308:3306'
+      - '3306'
     expose:
-      - 3308
+      - 3306
   backend:
     build:
       context: ../Backend
       dockerfile: Dockerfile
     restart: unless-stopped
     environment:
-      - DB_PORT=3308
+      - DB_PORT=3306
       - DB_HOSTNAME = "http://localhost"
       # - DB_DATABASE = web_cv
       - REACT_URL=localhost
