@@ -6,7 +6,7 @@ module.exports = {
     username: 'root',
     password: '123',
     database: 'web_cv',
-    host: 'localhost',
+    host: 'production-db-1',
     port: '3306',
     dialect: 'mysql'
   },
