@@ -12,7 +12,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 // This step should not normally be used in your script. Consult the inline help for details.
-                withDockerRegistry(credentialsId: 'docker', url: 'https://index.docker.io/v1/') {
+                withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') {
                     sh 'docker build -t napeno/production'
                     sh 'docker push napeno/production'
                 }
