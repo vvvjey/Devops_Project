@@ -9,7 +9,7 @@ pipeline {
             }
         }
 
-        stage('Clone Repository') {
+        stage('Build Docker Image') {
             steps {
                 // This step should not normally be used in your script. Consult the inline help for details.
                 withDockerRegistry(credentialsId: 'docker', url: 'https://index.docker.io/v1/') {
