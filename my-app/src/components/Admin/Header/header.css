@@ -1,0 +1,43 @@
+.header {
+  width: 100%;
+  height: 120px;
+  background-color: white;
+  position: relative;
+}
+.header .infor {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+.header .infor .infor-menu {
+  position: absolute;
+  top: 32px;
+  right: 5px;
+  display: none;
+  list-style: none;
+  background-color: white;
+  width: 100px;
+  padding: 0;
+  border-bottom-left-radius: 12px;
+  box-shadow: 0px 0px 1px 0.5px black;
+}
+.header .infor .infor-menu li {
+  cursor: pointer;
+  width: 100%;
+  border-bottom: 1px solid rgb(219, 216, 216);
+  padding: 5px 20px;
+  border-bottom: 0px solid white;
+}
+.header .infor .infor-menu::after {
+  content: "";
+  height: 30px;
+  width: 120px;
+  display: block;
+  position: absolute;
+  top: -20px;
+  right: -10px;
+}
+.header .infor:hover .infor-menu {
+  display: block;
+}/*# sourceMappingURL=header.css.map */

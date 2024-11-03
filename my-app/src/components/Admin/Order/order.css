@@ -1,0 +1,17 @@
+.admin-home-container {
+  background-color: rgb(230, 242, 255);
+  display: flex;
+}
+.admin-home-container .content-right {
+  width: 80%;
+}
+.admin-home-container .content-right .content {
+  margin: 40px auto 0;
+  width: 90%;
+  background-color: white;
+  min-height: 860px;
+}
+.admin-home-container .content-right .content table .select {
+  border-radius: 10px;
+  padding: 6px 16px;
+}/*# sourceMappingURL=order.css.map */

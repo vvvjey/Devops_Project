@@ -8,7 +8,7 @@ require('dotenv').config();
 var Sequelize = require("sequelize");
 var sequelize = new Sequelize("web_cv", "root", "123", {
   host: "production-db-1",
-  port: "3306",
+  port: 3306,
   dialect: "mysql"
 });
 var connectDB = /*#__PURE__*/function () {

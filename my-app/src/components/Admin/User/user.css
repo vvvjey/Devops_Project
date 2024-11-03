@@ -1,0 +1,71 @@
+.admin-home-container {
+  background-color: rgb(230, 242, 255);
+  display: flex;
+}
+.admin-home-container .content-right {
+  width: 80%;
+  margin-left: 300px;
+}
+.admin-home-container .content-right .content {
+  border-radius: 10px;
+  margin: 40px auto;
+  width: 95%;
+  background-color: white;
+}
+.admin-home-container .content-right .content .heading {
+  margin: 20px 0;
+  padding: 10px 20px;
+  font-size: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+.admin-home-container .content-right .content .heading .create-btn {
+  border: none;
+  background-color: rgb(214, 225, 236);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.admin-home-container .content-right .content .table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+}
+.admin-home-container .content-right .content .table tbody {
+  width: 100%;
+}
+.admin-home-container .content-right .content .table tbody tr {
+  display: flex;
+}
+.admin-home-container .content-right .content .table tbody tr td, .admin-home-container .content-right .content .table tbody tr th {
+  border-bottom-width: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: center;
+  flex: 1;
+  overflow: hidden;
+  font-size: 14px;
+  color: rgb(90, 90, 90);
+}
+.admin-home-container .content-right .content .table tbody tr td img, .admin-home-container .content-right .content .table tbody tr th img {
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.admin-home-container .content-right .content .table tbody tr:first-child td {
+  padding: 10px 6px;
+  flex: 1;
+  background-color: rgb(214, 225, 236);
+  color: black; /* text color for title row */
+  font-weight: bold; /* optional: make the text bold */
+}
+.admin-home-container .content-right .content .table tbody .name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.admin-home-container .content-right .content .table tbody .delete-btn {
+  margin: 0 4px;
+  border: none;
+  background-color: rgb(214, 225, 236);
+  padding: 4px 10px;
+  border-radius: 6px;
+}/*# sourceMappingURL=user.css.map */

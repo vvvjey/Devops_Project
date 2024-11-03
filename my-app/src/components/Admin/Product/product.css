@@ -1,0 +1,152 @@
+.admin-home-container {
+  background-color: rgb(213, 232, 252);
+  display: flex;
+}
+.admin-home-container .content-right {
+  width: 80%;
+  margin-left: 300px;
+}
+.admin-home-container .content-right .content {
+  border-radius: 10px;
+  margin: 40px auto;
+  width: 95%;
+  background-color: white;
+}
+.admin-home-container .content-right .content .heading {
+  margin: 20px 0;
+  padding: 10px 20px;
+  font-size: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+.admin-home-container .content-right .content .heading .create-btn {
+  border: none;
+  background-color: rgb(214, 225, 236);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.admin-home-container .content-right .content .table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+}
+.admin-home-container .content-right .content .table tbody {
+  width: 100%;
+}
+.admin-home-container .content-right .content .table tbody tr {
+  display: flex;
+}
+.admin-home-container .content-right .content .table tbody tr td, .admin-home-container .content-right .content .table tbody tr th {
+  border-bottom-width: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: center;
+  flex: 1;
+  overflow: hidden;
+  font-size: 14px;
+  color: rgb(90, 90, 90);
+}
+.admin-home-container .content-right .content .table tbody tr td img, .admin-home-container .content-right .content .table tbody tr th img {
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.admin-home-container .content-right .content .table tbody tr:first-child td {
+  padding: 10px 6px;
+  flex: 1;
+  background-color: rgb(214, 225, 236);
+  color: black; /* text color for title row */
+  font-weight: bold; /* optional: make the text bold */
+}
+.admin-home-container .content-right .content .table tbody .productName {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.admin-home-container .content-right .content .table tbody .delete-btn {
+  border: none;
+  background-color: rgb(214, 225, 236);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.admin-home-container .content-right .create-modal .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+.admin-home-container .content-right .create-modal .modal-container {
+  background-color: white;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  width: 40%;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  margin: auto;
+  display: inline-block;
+  border-radius: 10px;
+}
+.admin-home-container .content-right .create-modal .modal-container .modal-heading {
+  text-align: center;
+  padding: 10px;
+  position: relative;
+}
+.admin-home-container .content-right .create-modal .modal-container .modal-heading span {
+  font-size: 26px;
+  color: cornflowerblue;
+}
+.admin-home-container .content-right .create-modal .modal-container .modal-heading .close-btn {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  font-size: 22px;
+  color: black;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.admin-home-container .content-right .create-modal .modal-container .modal-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.admin-home-container .content-right .create-modal .modal-container .modal-content .form-input {
+  padding: 20px;
+  width: 40%;
+}
+.admin-home-container .content-right .create-modal .modal-container .modal-content .form-input label {
+  color: rgb(67, 87, 122);
+  margin-right: 6px;
+  padding: 5px 0;
+}
+.admin-home-container .content-right .create-modal .modal-container .modal-content .form-input .modal-input {
+  border: 1px gray solid;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.admin-home-container .content-right .create-modal .modal-container .modal-create {
+  text-align: end;
+  margin-right: 50px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+.admin-home-container .content-right .create-modal .modal-container .modal-create button {
+  border: none;
+  padding: 10px 40px;
+  border-radius: 10px;
+  background-color: cornflowerblue;
+  color: white;
+}/*# sourceMappingURL=product.css.map */

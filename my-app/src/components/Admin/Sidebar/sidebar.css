@@ -1,0 +1,23 @@
+.sidebar {
+  width: 20%;
+  min-height: 1000px;
+  background-color: rgb(86, 143, 243);
+  color: white;
+  position: fixed;
+  z-index: 1;
+}
+.sidebar .logo {
+  text-align: center;
+  height: 120px;
+  width: 100%;
+}
+.sidebar .menu-container {
+  padding: 0 10px;
+}
+.sidebar .menu-container .function {
+  list-style: none;
+}
+.sidebar .menu-container .function .item a {
+  text-decoration: none;
+  color: white;
+}/*# sourceMappingURL=sidebar.css.map */
