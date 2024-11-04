@@ -8,6 +8,8 @@ import socketIOClient from "socket.io-client";
 import {userChats,getMessage,addMessage} from '../../services/userServices';
 const host = "http://localhost:5000";
 
+
+// Test if conficts
 function Chat() {
     let [userChatList,setUserChatList] = useState(null);
     let [messagesChatBox,setMessagesChatBox] = useState(null);
