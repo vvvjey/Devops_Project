@@ -35,7 +35,7 @@ let createProduct = (data,imgFile) => {
                 const imgUrl = await handleUpload(dataURI);
                 // 
 
-                let isExistProduct = await db.Product.findOne({
+                let isExistProduct = await db.product.findOne({
                     where:{
                         name:data.name
                     }
@@ -44,7 +44,7 @@ let createProduct = (data,imgFile) => {
                 let newProduct=null;
                 let newProductDetail=null;
                 if(!isExistProduct) {
-                    newProduct = await db.Product.create({
+                    newProduct = await db.product.create({
                         name:data.name,
                         categoryId:data.categoryId,
                         collectionId:data.collectionId,
@@ -52,7 +52,7 @@ let createProduct = (data,imgFile) => {
                         description:data.description,
                         salePercent:data.salePercent
                     })
-                    newProductDetail = await db.Product_detail.create({
+                    newProductDetail = await db.product_detail.create({
                         productId:newProduct.productId,
                         size:data.size,
                         color:data.color,
@@ -62,7 +62,7 @@ let createProduct = (data,imgFile) => {
                     })
                 } else {
                     newProduct = isExistProduct;
-                    newProductDetail = await db.Product_detail.create({
+                    newProductDetail = await db.product_detail.create({
                         productId:isExistProduct.productId,
                         size:data.size,
                         color:data.color,
@@ -93,10 +93,10 @@ let createProduct = (data,imgFile) => {
 let getAllProduct = (data) =>{
     return new Promise(async(resolve,reject)=>{
         try {
-            let product = await db.Product.findAll({
+            let product = await db.product.findAll({
                 include:[
                     {
-                        model:db.Product_detail
+                        model:db.product_detail
                     }
                 ]
             })
@@ -126,13 +126,13 @@ let getAllProductByCategory = (data) =>{
                     errMessage:"There no existed product"
                 })
             }
-            let product = await db.Product.findAll({
+            let product = await db.product.findAll({
                 where:{
                     categoryId:data.categoryId
                 },
                 include:[
                     {
-                        model:db.Product_detail,
+                        model:db.product_detail,
                         attributes:['img'],
                         limit:1
                     }
@@ -164,13 +164,13 @@ let getProductById = (data) =>{
                     errMessage:"There no existed product"
                 })
             }
-            let product = await db.Product.findOne({
+            let product = await db.product.findOne({
                 where:{
                     productId:data.productId
                 },
                 include:[
                     {
-                        model:db.Product_detail
+                        model:db.product_detail
                     }
                 ]
             })
@@ -194,12 +194,12 @@ let getProductById = (data) =>{
 let getFiveNewestProducts = (data) => {
     return new Promise(async(resolve,reject)=>{
         try {
-            let products = await db.Product.findAll({
+            let products = await db.product.findAll({
                 order: [['createdAt', 'DESC']],
                 limit: 5 ,
                 include:[
                     {
-                        model : db.Product_detail
+                        model : db.product_detail
                     }
                 ]
               });
@@ -229,7 +229,7 @@ let deleteProduct = (data) =>{
                     errMessage:"Missing required parameter"
                 })
             } else {
-                let productDetail = await db.Product_detail.findOne({
+                let productDetail = await db.product_detail.findOne({
                     where:{
                         productDetailId:data.productDetailId
                     }
@@ -256,7 +256,7 @@ let fiveMostRatingProduct = () =>{
         try {
             runPythonScript()
             .then(async result=>{
-                let products = await db.Product.findAll({
+                let products = await db.product.findAll({
                     where: {
                       productId: {
                         [Op.in]: result
@@ -264,7 +264,7 @@ let fiveMostRatingProduct = () =>{
                     },
                     include:[
                         {
-                            model : db.Product_detail
+                            model : db.product_detail
                         }
                     ]
                   });

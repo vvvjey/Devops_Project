@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Order_detail.belongsTo(models.Order,{foreignKey:"orderId",targetKey:"orderId"})
-      Order_detail.hasMany(models.Product_detail, { foreignKey: "productDetailId" ,sourceKey:"productDetailId"}); // Changed foreign key
+      Order_detail.hasMany(models.product_detail, { foreignKey: "productDetailId" ,sourceKey:"productDetailId"}); // Changed foreign key
     }
   }
   Order_detail.init({

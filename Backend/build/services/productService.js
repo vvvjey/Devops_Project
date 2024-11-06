@@ -71,7 +71,7 @@ var createProduct = function createProduct(data, imgFile) {
           case 10:
             imgUrl = _context.sent;
             _context.next = 13;
-            return db.Product.findOne({
+            return db.product.findOne({
               where: {
                 name: data.name
               }
@@ -85,7 +85,7 @@ var createProduct = function createProduct(data, imgFile) {
               break;
             }
             _context.next = 19;
-            return db.Product.create({
+            return db.product.create({
               name: data.name,
               categoryId: data.categoryId,
               collectionId: data.collectionId,
@@ -96,7 +96,7 @@ var createProduct = function createProduct(data, imgFile) {
           case 19:
             newProduct = _context.sent;
             _context.next = 22;
-            return db.Product_detail.create({
+            return db.product_detail.create({
               productId: newProduct.productId,
               size: data.size,
               color: data.color,
@@ -110,7 +110,7 @@ var createProduct = function createProduct(data, imgFile) {
           case 25:
             newProduct = isExistProduct;
             _context.next = 28;
-            return db.Product_detail.create({
+            return db.product_detail.create({
               productId: isExistProduct.productId,
               size: data.size,
               color: data.color,
@@ -159,9 +159,9 @@ var getAllProduct = function getAllProduct(data) {
           case 0:
             _context2.prev = 0;
             _context2.next = 3;
-            return db.Product.findAll({
+            return db.product.findAll({
               include: [{
-                model: db.Product_detail
+                model: db.product_detail
               }]
             });
           case 3:
@@ -210,12 +210,12 @@ var getAllProductByCategory = function getAllProductByCategory(data) {
               });
             }
             _context3.next = 4;
-            return db.Product.findAll({
+            return db.product.findAll({
               where: {
                 categoryId: data.categoryId
               },
               include: [{
-                model: db.Product_detail,
+                model: db.product_detail,
                 attributes: ['img'],
                 limit: 1
               }]
@@ -266,12 +266,12 @@ var getProductById = function getProductById(data) {
               });
             }
             _context4.next = 4;
-            return db.Product.findOne({
+            return db.product.findOne({
               where: {
                 productId: data.productId
               },
               include: [{
-                model: db.Product_detail
+                model: db.product_detail
               }]
             });
           case 4:
@@ -314,11 +314,11 @@ var getFiveNewestProducts = function getFiveNewestProducts(data) {
           case 0:
             _context5.prev = 0;
             _context5.next = 3;
-            return db.Product.findAll({
+            return db.product.findAll({
               order: [['createdAt', 'DESC']],
               limit: 5,
               include: [{
-                model: db.Product_detail
+                model: db.product_detail
               }]
             });
           case 3:
@@ -372,7 +372,7 @@ var deleteProduct = function deleteProduct(data) {
             break;
           case 5:
             _context6.next = 7;
-            return db.Product_detail.findOne({
+            return db.product_detail.findOne({
               where: {
                 productDetailId: data.productDetailId
               }
@@ -424,12 +424,12 @@ var fiveMostRatingProduct = function fiveMostRatingProduct() {
                     while (1) switch (_context7.prev = _context7.next) {
                       case 0:
                         _context7.next = 2;
-                        return db.Product.findAll({
+                        return db.product.findAll({
                           where: {
                             productId: _defineProperty({}, Op["in"], result)
                           },
                           include: [{
-                            model: db.Product_detail
+                            model: db.product_detail
                           }]
                         });
                       case 2:

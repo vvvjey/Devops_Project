@@ -61,7 +61,7 @@ let getCommentbyProductId = (productId)=>{
                                     include:[
                                         {
                                             attributes:["productId"],
-                                            model:db.Product_detail
+                                            model:db.product_detail
                                         }
                                     ]
                                 }

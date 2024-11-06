@@ -19,4 +19,9 @@ pipeline {
             }
         }
     }
+    post{
+        always{
+            mail bcc: '', body: 'Mail from Jenkins successfully', cc: '21522029@gm.uit.edu.vn', from: '', replyTo: '', subject: 'Mail from Jenkins successfully', to: '21522029@gm.uit.edu.vn'
+        }
+    }
 }

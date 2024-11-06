@@ -110,7 +110,7 @@ var getCommentbyProductId = function getCommentbyProductId(productId) {
                   model: db.Order_detail,
                   include: [{
                     attributes: ["productId"],
-                    model: db.Product_detail
+                    model: db.product_detail
                   }]
                 }]
               }]

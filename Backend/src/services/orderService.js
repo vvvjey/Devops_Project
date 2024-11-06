@@ -60,10 +60,10 @@ let getAllOrder = () =>{
                         model: db.Order_detail,
                         include:[
                             {
-                                model:db.Product_detail,
+                                model:db.product_detail,
                                 include:[
                                     {
-                                        model:db.Product
+                                        model:db.product
                                     }
                                 ]
                             }
@@ -112,10 +112,10 @@ let getAllOrderUser = (userId,contentSelection) => {
                             model: db.Order_detail,
                             include:[
                                 {
-                                    model:db.Product_detail,
+                                    model:db.product_detail,
                                     include:[
                                         {
-                                            model:db.Product
+                                            model:db.product
                                         }
                                     ]
                                 }
@@ -134,10 +134,10 @@ let getAllOrderUser = (userId,contentSelection) => {
                             model: db.Order_detail,
                             include:[
                                 {
-                                    model:db.Product_detail,
+                                    model:db.product_detail,
                                     include:[
                                         {
-                                            model:db.Product
+                                            model:db.product
                                         }
                                     ]
                                 }

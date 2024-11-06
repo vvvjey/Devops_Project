@@ -26,10 +26,10 @@ let getProductsById = (data)=>{
                     },
                     include:[
                         {
-                            model:db.Product_detail,
+                            model:db.product_detail,
                             include: [
                                 {
-                                  model: db.Product
+                                  model: db.product
                                 }
                             ]
                         }
@@ -64,7 +64,7 @@ let addProductToCart = (data)=>{
                 })
             } else {
                 // Logic add quantity
-                let productDetail = await db.Product_detail.findOne({
+                let productDetail = await db.product_detail.findOne({
                     where:{
                         size:data.size,
                         color:data.color,

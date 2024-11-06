@@ -45,9 +45,9 @@ var getProductsById = function getProductsById(data) {
                 cartId: cart.cartId
               },
               include: [{
-                model: db.Product_detail,
+                model: db.product_detail,
                 include: [{
-                  model: db.Product
+                  model: db.product
                 }]
               }]
             });
@@ -103,7 +103,7 @@ var addProductToCart = function addProductToCart(data) {
             break;
           case 5:
             _context2.next = 7;
-            return db.Product_detail.findOne({
+            return db.product_detail.findOne({
               where: {
                 size: data.size,
                 color: data.color,

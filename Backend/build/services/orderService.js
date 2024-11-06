@@ -115,9 +115,9 @@ var getAllOrder = function getAllOrder() {
               include: [{
                 model: db.Order_detail,
                 include: [{
-                  model: db.Product_detail,
+                  model: db.product_detail,
                   include: [{
-                    model: db.Product
+                    model: db.product
                   }]
                 }]
               }]
@@ -183,9 +183,9 @@ var getAllOrderUser = function getAllOrderUser(userId, contentSelection) {
               include: [{
                 model: db.Order_detail,
                 include: [{
-                  model: db.Product_detail,
+                  model: db.product_detail,
                   include: [{
-                    model: db.Product
+                    model: db.product
                   }]
                 }]
               }]
@@ -204,9 +204,9 @@ var getAllOrderUser = function getAllOrderUser(userId, contentSelection) {
               include: [{
                 model: db.Order_detail,
                 include: [{
-                  model: db.Product_detail,
+                  model: db.product_detail,
                   include: [{
-                    model: db.Product
+                    model: db.product
                   }]
                 }]
               }]

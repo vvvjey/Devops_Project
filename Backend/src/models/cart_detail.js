@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Cart_detail.belongsTo(models.Cart,{foreignKey:"cartId",targetKey:"cartId"})
-      Cart_detail.hasOne(models.Product_detail, { foreignKey: "productDetailId", sourceKey: "productDetailId" });
+      Cart_detail.hasOne(models.product_detail, { foreignKey: "productDetailId", sourceKey: "productDetailId" });
     }
   }
   Cart_detail.init({
