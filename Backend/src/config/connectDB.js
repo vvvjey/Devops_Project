@@ -7,12 +7,13 @@ const sequelize = new Sequelize(
   {
     host : process.env.DB_HOSTNAME,
     port:process.env.DB_PORT,
-    dialect:process.env.DB_DIALECT
+    dialect:process.env.DB_DIALECT,
+    logging: false
   }
 );
 let connectDB = async ()=>{
     try{
-        console.log("hehe",sequelize);
+        // console.log("hehe",sequelize);
         sequelize.authenticate().then(() => {
             console.log('Connection has been established successfully.');
          }).catch((error) => {

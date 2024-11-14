@@ -8,6 +8,7 @@ const socketIo = require('socket.io');
 const http = require('http');
 require('dotenv').config()
 
+const kafka = require('./kafka/index');
 
 
 
@@ -30,9 +31,11 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+app.get('/kafka', (req, res) => res.send('Hello Kafka in Node.js!'));
+app.get('/abc', (req, res) => res.send('hello!'));
 
 const corsOptions ={
-    origin:`http://localhost`, 
+    origin:`http://localhost:3000`, 
     credentials:true,       
 }
 app.use(cors(corsOptions));
@@ -54,6 +57,7 @@ app.use(cors(corsOptions));
 //     // Pass to next layer of middleware
 //     next();
 // });
+
 var activeUsers=[];
 io.on("connection", (socket) => {
     console.log("New client connected: " + socket.id); 

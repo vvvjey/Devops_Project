@@ -97,8 +97,8 @@ function Home() {
                         <img src="https://stance.eu.com/cdn/shop/files/snow-featured-tile_748b9f36-4aa4-4f78-8fbb-7091d7ac233f.jpg?v=1707498355&width=950"></img>
                     </div>
                     <div className='content-left'>
-                        <h2>New trending</h2>
-                        <h1>SNOW SOCKS</h1>
+                        <h2>New trendingg</h2>
+                        <h1>SNOW SOCKSs</h1>
                         <h3>Gear up and ride in comfort this season with our latest winter-ready snow styles worn and tested by our Punk & Poet team.</h3>
                         <a> Shop now</a>
                     </div>

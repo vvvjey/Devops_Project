@@ -1,5 +1,6 @@
 const { Model } = require('sequelize');
 const db = require('../models/index')
+const {sendOrderReceivedMessage} = require('../kafka/producer/orderProducer');
 let createOrder = (data)=>{
     return new Promise(async(resolve, reject) => {
         try {
@@ -40,6 +41,8 @@ let createOrder = (data)=>{
                         cartId: cart.cartId
                     }
                 });
+                // Trigger producer
+                await sendOrderReceivedMessage(data.productsInfor,order.orderId);
                 resolve({
                     errCode: 0,
                     message: "Create success"

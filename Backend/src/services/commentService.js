@@ -82,7 +82,7 @@ let getCommentbyProductId = (productId)=>{
                 // Take array result of which comment has PICKED productId 
                 let commentResult = [];
                 for (const item of commentWithProducts) {
-                    console.log(item)
+                    // console.log(item)
                     for (const itemChild of item.productIds) {
                         if (itemChild == productId) {
                             let user = await db.User.findOne({

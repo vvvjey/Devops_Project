@@ -7,7 +7,9 @@ module.exports= {
     database: 'web_cv',
     host: 'host.docker.internal',
     port:'3308',
-    dialect: 'mysql'
+    dialect: 'mysql',
+    logging: false
+
   },
   test: {
     username: process.env.DB_USERNAME,

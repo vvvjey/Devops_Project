@@ -20,7 +20,8 @@ let initWebRoutes = (app) => {
     router.post('/api/test',verifyAccessToken,userController.test);
     router.post('/api/refresh-token',userController.refreshAccessToken);
 
-
+    // KAFKA GET
+    // router.get('/abc',(req, res) => res.send('Hello Kafka in Node.js!'));
 
     //Product
     router.post('/api/create-product',upload.single('img'),productController.createProduct);
