@@ -7,6 +7,8 @@ services:
       - "./prometheus.yml:/etc/prometheus/prometheus.yml"
     ports:
       - 9090:9090
+    networks:
+      - monitoring
 
   grafana:
     image: grafana/grafana
@@ -19,19 +21,34 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - ./grafana:/etc/grafana/provisioning/datasources
+    networks:
+      - monitoring
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - monitoring
 
   db:
     image: mysql:8.0
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
+    container_name: mysql_db
     restart: always
     environment:
       - MYSQL_DATABASE=web_cv
       - MYSQL_ROOT_PASSWORD=123
     ports:
-      - '3306'
-    expose:
-      - 3306
+      - '3308:3306'
+    networks:
+      - monitoring
+
   backend:
     build:
       context: ../Backend
@@ -40,20 +57,26 @@ services:
     environment:
       - DB_PORT=3306
       - DB_HOSTNAME=db
-      - DB_DATABASE = web_cv
+      - DB_DATABASE=web_cv
+      - DB_PASSWORD=123
+      - DB_USERNAME=root
       - REACT_URL=localhost
-      # - DB_PASSWORD = 123
-      # - DB_USERNAME = root
-      # - REACT_USERNAME =root
-      # - REACT_PASSWORD =123
-      - DB_DIALECT = mysql
-    # - DB_HOSTNAME=host.docker.internal
+      - DB_DIALECT=mysql
     ports:
       - 5000:5000
+    networks:
+      - monitoring
+
   nginx:
     image: nginx:1.25.4
+    container_name: nginx_server
     ports:
       - 80:80
     volumes:
       - ../my-app/build:/usr/share/nginx/html
       - ./default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
