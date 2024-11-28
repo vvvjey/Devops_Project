@@ -24,13 +24,13 @@ pipeline {
                 }
             }
         }
-        //Test
+
+
         stage('Snyk: Check Node.js Dependencies') {
             steps {
                 dir('my-app') {
                     withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
                         sh '''
-                            npm install
                             snyk auth ${SNYK_TOKEN}
                             snyk test --file=package.json
                         '''
@@ -39,6 +39,19 @@ pipeline {
             }
         }
 
+        stage('Snyk: Fix Node.js Vulnerabilities') {
+            steps {
+                dir('my-app') {
+                    withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
+                        sh '''
+                            snyk auth ${SNYK_TOKEN}
+                            snyk wizard --file=package.json
+                            npm install
+                        '''
+                    }
+                }
+            }
+        }
 
         stage('Snyk: Check Docker Compose Security') {
             steps {
