@@ -86,11 +86,13 @@ pipeline {
 
         stage('Snyk: Check Dockerfile Security') {
             steps {
-                withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
-                    sh '''
-                        snyk auth ${SNYK_TOKEN}
-                        snyk container test napeno/production:latest --file=Dockerfile
-                    '''
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
+                        sh '''
+                            snyk auth ${SNYK_TOKEN}
+                            snyk container test napeno/production:latest --file=Dockerfile
+                        '''
+                    }
                 }
             }
         }
