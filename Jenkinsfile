@@ -73,25 +73,26 @@ pipeline {
 
         stage('Snyk: Check Dockerfile Security') {
             steps {
-                dir('production') {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
-                            sh '''
-                                snyk auth ${SNYK_TOKEN}
-                                snyk container test . --file=Dockerfile
-                            '''
-                        }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
+                        sh '''
+                            snyk auth ${SNYK_TOKEN}
+                            snyk container test . --file=Dockerfile
+                        '''
                     }
                 }
             }
         }
 
+
         stage('Build Docker Image') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') {
-                        sh 'docker build -t napeno/production:latest -f Dockerfile .'
-                        sh 'docker push napeno/production'
+                        sh '''
+                            docker build -t napeno/production:latest -f Dockerfile .
+                            docker push napeno/production
+                        '''
                     }
                 }
             }
