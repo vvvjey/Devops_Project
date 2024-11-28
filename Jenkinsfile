@@ -24,7 +24,7 @@ pipeline {
                 }
             }
         }
-
+        //Test
         stage('Snyk: Check Node.js Dependencies') {
             steps {
                 dir('my-app') {
