@@ -30,6 +30,7 @@ pipeline {
                 dir('my-app') {
                     withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
                         sh '''
+                            npm install
                             snyk auth ${SNYK_TOKEN}
                             snyk test --file=package.json
                         '''
@@ -37,6 +38,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Snyk: Check Docker Compose Security') {
             steps {
