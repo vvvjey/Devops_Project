@@ -9,12 +9,12 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') { //test
+        stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
                         sh '''
-                            sonar-scanner \
+                            /opt/sonar-scanner/bin/sonar-scanner \
                             -Dsonar.projectKey=Devops_Project \
                             -Dsonar.sources=. \
                             -Dsonar.host.url=http://137.184.144.191:9000 \
@@ -24,6 +24,8 @@ pipeline {
                 }
             }
         }
+
+
 
         stage('Build Docker Image') {
             steps {
