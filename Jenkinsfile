@@ -25,7 +25,44 @@ pipeline {
             }
         }
 
+        stage('Snyk: Check Node.js Dependencies') {
+            steps {
+                dir('my-app') {
+                    withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
+                        sh '''
+                            snyk auth ${SNYK_TOKEN}
+                            snyk test --file=package.json
+                        '''
+                    }
+                }
+            }
+        }
 
+        stage('Snyk: Check Docker Compose Security') {
+            steps {
+                dir('Docker') {
+                    withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
+                        sh '''
+                            snyk auth ${SNYK_TOKEN}
+                            snyk iac test docker-compose.yaml
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Snyk: Check Dockerfile Security') {
+            steps {
+                dir('production') {
+                    withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
+                        sh '''
+                            snyk auth ${SNYK_TOKEN}
+                            snyk container test . --file=Dockerfile
+                        '''
+                    }
+                }
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
@@ -37,8 +74,15 @@ pipeline {
         }
     }
     post {
-        always {
-            mail bcc: '', body: 'Mail from Jenkins successfully', cc: '21522029@gm.uit.edu.vn', from: '', replyTo: '', subject: 'Mail from Jenkins successfully', to: '21522029@gm.uit.edu.vn'
-        }
+    success {
+        mail bcc: '', body: 'Pipeline completed successfully!', cc: '21522029@gm.uit.edu.vn', from: '', replyTo: '', subject: 'Pipeline Success', to: '21522029@gm.uit.edu.vn'
     }
+    failure {
+        mail bcc: '', body: 'Pipeline failed. Please check the logs.', cc: '21522029@gm.uit.edu.vn', from: '', replyTo: '', subject: 'Pipeline Failure', to: '21522029@gm.uit.edu.vn'
+    }
+    always {
+        echo 'Pipeline finished!'
+    }
+}
+
 }
