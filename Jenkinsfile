@@ -9,9 +9,24 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
+                        sh '''
+                            sonar-scanner \
+                            -Dsonar.projectKey=Devops_Project \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=http://137.184.144.191:9000 \
+                            -Dsonar.login=${SONAR_TOKEN}
+                        '''
+                    }
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                // This step should not normally be used in your script. Consult the inline help for details.
                 withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') {
                     sh 'docker build -t napeno/production:latest -f Dockerfile .'
                     sh 'docker push napeno/production'
@@ -19,8 +34,8 @@ pipeline {
             }
         }
     }
-    post{
-        always{
+    post {
+        always {
             mail bcc: '', body: 'Mail from Jenkins successfully', cc: '21522029@gm.uit.edu.vn', from: '', replyTo: '', subject: 'Mail from Jenkins successfully', to: '21522029@gm.uit.edu.vn'
         }
     }
