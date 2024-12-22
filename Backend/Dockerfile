@@ -1,11 +1,11 @@
-FROM node:18-alpine
+FROM node:18-bullseye
 
 RUN apt-get update && apt-get install -y \
     mariadb-client \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /hoangtu1289/backend
+WORKDIR /app
 
 COPY package*.json ./
 
