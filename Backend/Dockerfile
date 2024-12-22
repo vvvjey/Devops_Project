@@ -1,6 +1,9 @@
 FROM node:18-alpine
 
-RUN apk update && apk add --no-cache mariadb-client
+RUN sed -i 's|http://dl-cdn.alpinelinux.org|http://mirror.cs.uchicago.edu|g' /etc/apk/repositories \
+    && apk update \
+    && apk add --no-cache mariadb-client
+
 
 WORKDIR /hoangtu1289/backend
 

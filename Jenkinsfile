@@ -82,7 +82,7 @@ pipeline {
 
         stage('Build and Push Docker Images') {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                // catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') {
                         script {
                             def images = [
@@ -99,7 +99,7 @@ pipeline {
                             }
                         }
                     }
-                }
+                // }
             }
         }
 
