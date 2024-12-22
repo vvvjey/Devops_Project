@@ -87,7 +87,7 @@ pipeline {
                         def images = [
                             [path: './Backend', image: 'napeno/backend:latest'],
                             [path: './my-app', image: 'napeno/frontend:latest'],
-                            [path: './production/grafana', image: 'napeno/grafana:latest']
+                            [path: './production/grafana/provisioning', image: 'napeno/grafana:latest']
                         ]
                         
                         for (img in images) {
