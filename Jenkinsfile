@@ -67,14 +67,37 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        // stage('Build Docker Image') {
+        //     steps {
+        //         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        //             withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') {
+        //                 sh '''
+        //                     docker build -t napeno/production:latest -f Dockerfile .
+        //                     docker push napeno/production
+        //                 '''
+        //             }
+        //         }
+        //     }
+        // }
+
+        stage('Build and Push Docker Images') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') {
-                        sh '''
-                            docker build -t napeno/production:latest -f Dockerfile .
-                            docker push napeno/production
-                        '''
+                        script {
+                            def images = [
+                                [path: './Backend/Dockerfile', image: 'napeno/backend:latest'],
+                                [path: './my-app/Dockerfile', image: 'napeno/frontend:latest'],
+                                [path: './production/grafana/Dockerfile', image: 'napeno/production:latest']
+                            ]
+                            for (img in images) {
+                                echo "Building and pushing image: ${img.image}"
+                                sh """
+                                    docker build -t ${img.image} ${img.path}
+                                    docker push ${img.image}
+                                """
+                            }
+                        }
                     }
                 }
             }

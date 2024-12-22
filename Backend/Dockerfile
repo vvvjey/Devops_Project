@@ -13,6 +13,8 @@ RUN npm install -g @babel/core @babel/cli
 
 COPY . .
 
+EXPOSE 5000
+
 RUN npm run build-src
 
 CMD ["npm","run","build"]
