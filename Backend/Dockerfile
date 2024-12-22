@@ -1,9 +1,9 @@
 FROM node:18-alpine
 
-RUN sed -i 's|http://dl-cdn.alpinelinux.org|http://mirror.cs.uchicago.edu|g' /etc/apk/repositories \
-    && apk update \
-    && apk add --no-cache mariadb-client
-
+RUN apt-get update && apt-get install -y \
+    mariadb-client \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /hoangtu1289/backend
 
