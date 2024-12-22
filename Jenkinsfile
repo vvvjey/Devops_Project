@@ -101,7 +101,7 @@ pipeline {
                         helm upgrade --install production-app ./helm \
                         --set image.repository=napeno/production \
                         --set image.tag=latest \
-                        --set service.nodePort=30000
+                        --set service.nodePort=30000 \
                         --force
                     '''
                     echo 'Deployment completed successfully'
