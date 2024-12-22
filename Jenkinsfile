@@ -130,7 +130,7 @@ pipeline {
                         helm upgrade --install backend-app ./helm/backend \
                         --set image.repository=napeno/backend \
                         --set image.tag=latest \
-                        --set service.nodePort=30001 \
+                        --set service.type=LoadBalancer \
                         --force
 
                        helm upgrade --install frontend-app ./helm/frontend \

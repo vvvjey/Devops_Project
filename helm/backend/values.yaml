@@ -10,4 +10,8 @@ service:
   port: 80
   targetPort: 5000
 
+serviceAccount:
+  create: true
+  name: ""
+
 resources: {}
