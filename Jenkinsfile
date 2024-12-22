@@ -86,9 +86,9 @@ pipeline {
                     withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') {
                         script {
                             def images = [
-                                [path: './Backend/Dockerfile', image: 'napeno/backend:latest'],
-                                [path: './my-app/Dockerfile', image: 'napeno/frontend:latest'],
-                                [path: './production/grafana/Dockerfile', image: 'napeno/production:latest']
+                                [path: './Backend', image: 'napeno/backend:latest'],
+                                [path: './my-app', image: 'napeno/frontend:latest'],
+                                [path: './production/grafana', image: 'napeno/grafana:latest']
                             ]
                             for (img in images) {
                                 echo "Building and pushing image: ${img.image}"
