@@ -1,10 +1,11 @@
 FROM node:18-bullseye
 
-RUN apt-get update && apt-get install -y \
-    mariadb-client \
+RUN sed -i 's|http://deb.debian.org|http://mirror.cs.uchicago.edu|g' /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install -y mariadb-client \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
+    
 WORKDIR /app
 
 COPY package*.json ./
