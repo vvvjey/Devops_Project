@@ -1,45 +1,95 @@
----
+# Frontend Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: production-app
-  namespace: default
-  labels:
-    app: production-app
+  name: frontend
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: production-app
+      app: frontend
   template:
     metadata:
       labels:
-        app: production-app
+        app: frontend
     spec:
       containers:
-        - name: production-app
-          image: napeno/production:latest
-          securityContext:
-            runAsUser: 0
-            runAsGroup: 0
-          ports:
-            - containerPort: 80
-          imagePullPolicy: Always
+      - name: frontend
+        image: napeno/frontend:latest
+        ports:
+        - containerPort: 80
 
 ---
-apiVersion: v1
-kind: Service
+
+# Backend Deployment
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: production-app-service
-  namespace: default
+  name: backend
   labels:
-    app: production-app
+    app: backend
 spec:
-  type: NodePort
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-      nodePort: 30000
+  replicas: 2
   selector:
-    app: production-app
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: napeno/backend:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: DB_HOSTNAME
+          value: "mysql-database-service" # Tên service trong Kubernetes
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_DATABASE
+          value: "web_cv"
+        - name: DB_USERNAME
+          value: "root"
+        - name: DB_PASSWORD
+          value: "123"
+        - name: DB_DIALECT
+          value: "mysql"
+
+---
+
+# Mysql Deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "123" # Mật khẩu root
+        - name: MYSQL_DATABASE
+          value: "web_cv" # Tên database
+        - name: MYSQL_USER
+          value: "user" # User tùy chỉnh
+        - name: MYSQL_PASSWORD
+          value: "password" # Mật khẩu tùy chỉnh
+
+

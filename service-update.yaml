@@ -1,17 +1,44 @@
+# Frontend Service
 apiVersion: v1
 kind: Service
 metadata:
-  name: production-app-service
-  namespace: default
-  labels:
-    app: production-app
-  annotations:
-    kubernetes.digitalocean.com/load-balancer-id: "6ec1d232-6f51-40fb-bd49-f26d11e587e0"
+  name: frontend-service
 spec:
   type: LoadBalancer
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+  - port: 80
+    targetPort: 80
   selector:
-    app: production-app
+    app: frontend
+
+---
+
+# Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  ports:
+  - port: 5000
+    targetPort: 5000
+  selector:
+    app: backend
+    
+---
+
+# Mysql Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-database-service
+  labels:
+    app: mysql
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: mysql
+

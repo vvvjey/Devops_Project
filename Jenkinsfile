@@ -87,7 +87,7 @@ pipeline {
                         def images = [
                             [path: './Backend', image: 'napeno/backend:latest'],
                             [path: './my-app', image: 'napeno/frontend:latest'],
-                            [path: './production/grafana/provisioning', image: 'napeno/grafana:latest']
+                            // [path: './production/grafana/provisioning', image: 'napeno/grafana:latest']
                         ]
                         
                         for (img in images) {
@@ -127,10 +127,16 @@ pipeline {
                 script {
                     echo 'Deploying application to Kubernetes'
                     sh '''
-                        helm upgrade --install production-app ./helm \
-                        --set image.repository=napeno/production \
+                        helm upgrade --install backend-app ./helm/backend \
+                        --set image.repository=napeno/backend \
                         --set image.tag=latest \
-                        --set service.nodePort=30000 \
+                        --set service.nodePort=30001 \
+                        --force
+
+                       helm upgrade --install frontend-app ./helm/frontend \
+                        --set image.repository=napeno/frontend \
+                        --set image.tag=latest \
+                        --set service.type=LoadBalancer \
                         --force
                     '''
                     echo 'Deployment completed successfully'

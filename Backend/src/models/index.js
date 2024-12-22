@@ -13,8 +13,9 @@ let sequelize;
 
 const customizeConfig = {
   host : process.env.DB_HOSTNAME,
-  port:process.env.DB_PORT,
-  dialect:process.env.DB_DIALECT
+  port: process.env.DB_PORT || 3306, 
+  dialect: process.env.DB_DIALECT || 'mysql', 
+  logging: false,
 }
 
 sequelize=new Sequelize(
