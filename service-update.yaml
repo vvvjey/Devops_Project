@@ -1,15 +1,15 @@
-# Frontend Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend-service
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-    targetPort: 80
-  selector:
-    app: frontend
+# # Frontend Service
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: frontend-service
+# spec:
+#   type: LoadBalancer
+#   ports:
+#   - port: 80
+#     targetPort: 80
+#   selector:
+#     app: frontend
 
 ---
 
@@ -17,28 +17,31 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend-service
+  name: backend-app
 spec:
-  ports:
-  - port: 5000
-    targetPort: 5000
   selector:
-    app: backend
-    
----
+    app.kubernetes.io/instance: backend-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer
 
-# Mysql Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-database-service
-  labels:
-    app: mysql
-spec:
-  type: ClusterIP
-  ports:
-    - port: 3306
-      targetPort: 3306
-  selector:
-    app: mysql
+    
+# ---
+
+# # Mysql Service
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: mysql-database-service
+#   labels:
+#     app: mysql
+# spec:
+#   type: ClusterIP
+#   ports:
+#     - port: 3306
+#       targetPort: 3306
+#   selector:
+#     app: mysql
 

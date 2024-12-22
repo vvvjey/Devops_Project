@@ -18,6 +18,12 @@ const customizeConfig = {
   logging: false,
 }
 
+console.log("Database Configurations:");
+console.log("DB_HOSTNAME:", process.env.DB_HOSTNAME);
+console.log("DB_PORT:", process.env.DB_PORT);
+console.log("DB_DIALECT:", process.env.DB_DIALECT);
+console.log("DB_DATABASE:", process.env.DB_DATABASE);
+
 sequelize=new Sequelize(
   process.env.DB_DATABASE,
   process.env.DB_USERNAME,
