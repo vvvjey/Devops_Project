@@ -45,7 +45,7 @@ services:
       - MYSQL_DATABASE=web_cv
       - MYSQL_ROOT_PASSWORD=123
     ports:
-      - '3308:3306'
+      - '3306:3306'
     networks:
       - monitoring
 
