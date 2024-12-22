@@ -10,7 +10,7 @@ COPY package.json package-lock.json ./
 # Cài đặt dependencies
 RUN npm install
 
-# Sao chép mã nguồn và build ứng dụng
+# Sao chép mã nguồn và build ứng dụngd
 COPY . .
 RUN npm run build
 
