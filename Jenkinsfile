@@ -5,7 +5,19 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 git branch: 'sha', url: 'https://github.com/vvvjey/Devops_Project.git'
-                echo 'Test GitLab Successfully'
+                echo 'Repository cloned successfully'
+            }
+        }
+
+        stage('Lint YAML and Helm Charts') {
+            steps {
+                script {
+                    echo 'Linting Kubernetes YAML files and Helm charts'
+                    sh '''
+                        yamllint deployment.yaml
+                        helm lint ./helm
+                    '''
+                }
             }
         }
 
@@ -33,22 +45,6 @@ pipeline {
                             sh '''
                                 snyk auth ${SNYK_TOKEN}
                                 snyk test --file=package.json
-                            '''
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Snyk: Fix Node.js Vulnerabilities') {
-            steps {
-                dir('my-app') {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
-                            sh '''
-                                snyk auth ${SNYK_TOKEN}
-                                snyk wizard --file=package.json
-                                npm install
                             '''
                         }
                     }
@@ -93,6 +89,33 @@ pipeline {
                             snyk container test napeno/production:latest --file=Dockerfile
                         '''
                     }
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    echo 'Deploying application to Kubernetes'
+                    sh '''
+                        helm upgrade --install production-app ./helm \
+                        --set image.repository=napeno/production \
+                        --set image.tag=latest \
+                        --set service.nodePort=30000
+                    '''
+                    echo 'Deployment completed successfully'
+                }
+            }
+        }
+
+        stage('Validate Deployment') {
+            steps {
+                script {
+                    echo 'Validating Kubernetes deployment'
+                    sh '''
+                        kubectl get pods -o wide
+                        kubectl get svc -o wide
+                    '''
                 }
             }
         }

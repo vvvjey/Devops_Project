@@ -24,18 +24,18 @@ services:
     networks:
       - monitoring
 
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor:latest
-    container_name: cadvisor
-    ports:
-      - 8080:8080
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:ro
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    networks:
-      - monitoring
+  # cadvisor:
+  #   image: gcr.io/cadvisor/cadvisor:latest
+  #   container_name: cadvisor
+  #   ports:
+  #     - 8080:8080
+  #   volumes:
+  #     - /:/rootfs:ro
+  #     - /var/run:/var/run:ro
+  #     - /sys:/sys:ro
+  #     - /var/lib/docker/:/var/lib/docker:ro
+  #   networks:
+  #     - monitoring
 
   db:
     image: mysql:8.0
@@ -71,7 +71,7 @@ services:
     image: nginx:1.25.4
     container_name: nginx_server
     ports:
-      - 80:80
+      - 8080:80
     volumes:
       - ../my-app/build:/usr/share/nginx/html
       - ./default.conf:/etc/nginx/conf.d/default.conf
