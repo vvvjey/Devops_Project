@@ -1,3 +1,4 @@
+---
 # Frontend Deployment
 apiVersion: apps/v1
 kind: Deployment
@@ -14,13 +15,12 @@ spec:
         app: frontend
     spec:
       containers:
-      - name: frontend
-        image: napeno/frontend:latest
-        ports:
-        - containerPort: 80
+        - name: frontend
+          image: napeno/frontend:latest
+          ports:
+            - containerPort: 80
 
 ---
-
 # Backend Deployment
 apiVersion: apps/v1
 kind: Deployment
@@ -39,28 +39,26 @@ spec:
         app: backend
     spec:
       containers:
-      - name: backend
-        image: napeno/backend:latest
-        ports:
-        - containerPort: 5000
-        env:
-        - name: DB_HOSTNAME
-          value: "mysql-database-service" # Tên service trong Kubernetes
-        - name: DB_PORT
-          value: "3306"
-        - name: DB_DATABASE
-          value: "web_cv"
-        - name: DB_USERNAME
-          value: "root"
-        - name: DB_PASSWORD
-          value: "123"
-        - name: DB_DIALECT
-          value: "mysql"
+        - name: backend
+          image: napeno/backend:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_HOSTNAME
+              value: "mysql-database-service"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_DATABASE
+              value: "web_cv"
+            - name: DB_USERNAME
+              value: "root"
+            - name: DB_PASSWORD
+              value: "123"
+            - name: DB_DIALECT
+              value: "mysql"
 
 ---
-
 # Mysql Deployment
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -78,18 +76,16 @@ spec:
         app: mysql
     spec:
       containers:
-      - name: mysql
-        image: mysql:8.0
-        ports:
-        - containerPort: 3306
-        env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: "123" # Mật khẩu root
-        - name: MYSQL_DATABASE
-          value: "web_cv" # Tên database
-        - name: MYSQL_USER
-          value: "user" # User tùy chỉnh
-        - name: MYSQL_PASSWORD
-          value: "password" # Mật khẩu tùy chỉnh
-
-
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "123"
+            - name: MYSQL_DATABASE
+              value: "web_cv"
+            - name: MYSQL_USER
+              value: "user"
+            - name: MYSQL_PASSWORD
+              value: "password"
