@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-RUN apk add --no-cache mariadb-client
+RUN apk update && apk add --no-cache mariadb-client
 
 WORKDIR /hoangtu1289/backend
 
