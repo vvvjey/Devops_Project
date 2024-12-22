@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: production-app-service
+  namespace: default
+  labels:
+    app: production-app
+  annotations:
+    kubernetes.digitalocean.com/load-balancer-id: "6ec1d232-6f51-40fb-bd49-f26d11e587e0"
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  selector:
+    app: production-app
