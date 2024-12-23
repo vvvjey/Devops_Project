@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { setIsLogin } from "../src/store/actions/userAction";
 
 const instance = axios.create({
-    // baseURL: "http://localhost:5000",
     baseURL: "http://137.184.250.129:80",
     withCredentials: true
 });
