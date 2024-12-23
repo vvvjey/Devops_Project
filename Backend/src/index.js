@@ -31,10 +31,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 
-const corsOptions ={
-    origin:`http://localhost`, 
-    credentials:true,       
-}
+const corsOptions = {
+    origin: ["http://localhost", "http://137.184.250.129"],
+    credentials: true,
+};
 app.use(cors(corsOptions));
 
 // app.use(function (req, res, next) {
