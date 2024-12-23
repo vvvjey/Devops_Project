@@ -1,24 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-stable
+  name: {{ include "frontend.fullname" . }}-stable
   labels:
-    app: frontend
-    version: stable
+    {{- include "frontend.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount.stable }}
   selector:
     matchLabels:
-      app: frontend
-      version: stable
+      app: {{ include "frontend.name" . }}
   template:
     metadata:
       labels:
-        app: frontend
-        version: stable
+        app: {{ include "frontend.name" . }}
     spec:
       containers:
-        - name: frontend
-          image: {{ .Values.image.repository }}:{{ .Values.image.stableTag }}
+        - name: {{ include "frontend.name" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.stableTag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.service.port }}

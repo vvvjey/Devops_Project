@@ -1,24 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-canary
+  name: {{ include "frontend.fullname" . }}-canary
   labels:
-    app: frontend
-    version: canary
+    {{- include "frontend.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount.canary }}
   selector:
     matchLabels:
-      app: frontend
-      version: canary
+      app: {{ include "frontend.name" . }}-canary
   template:
     metadata:
       labels:
-        app: frontend
-        version: canary
+        app: {{ include "frontend.name" . }}-canary
     spec:
       containers:
-        - name: frontend
-          image: {{ .Values.image.repository }}:{{ .Values.image.canaryTag }}
+        - name: {{ include "frontend.name" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.canaryTag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.service.port }}
