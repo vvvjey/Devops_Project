@@ -130,12 +130,14 @@ pipeline {
                         helm upgrade --install backend-app ./helm/backend \
                         --set image.repository=napeno/backend \
                         --set image.tag=latest \
+                        --set image.pullPolicy=Always \
                         --set service.type=LoadBalancer \
                         --force
 
                        helm upgrade --install frontend-app ./helm/frontend \
                         --set image.repository=napeno/frontend \
                         --set image.tag=latest \
+                        --set image.pullPolicy=Always \
                         --set service.type=LoadBalancer \
                         --force
                     '''
