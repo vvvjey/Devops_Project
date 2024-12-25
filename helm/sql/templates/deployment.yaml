@@ -20,10 +20,16 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: "{{ .Values.env.MYSQL_ROOT_PASSWORD }}"
-            - name: MYSQL_DATABASE
-              value: "{{ .Values.env.MYSQL_DATABASE }}"
+            - name: DB_HOST
+              value: "{{ .Values.env.DB_HOST }}"
+            - name: DB_PORT
+              value: "{{ .Values.env.DB_PORT }}"
+            - name: DB_NAME
+              value: "{{ .Values.env.DB_NAME }}"
+            - name: DB_USER
+              value: "{{ .Values.env.DB_USER }}"
+            - name: DB_PASSWORD
+              value: "{{ .Values.env.DB_PASSWORD }}"
           ports:
             - containerPort: 3306
           resources:

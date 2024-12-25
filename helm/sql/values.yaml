@@ -22,5 +22,8 @@ resources:
     memory: 256Mi
 
 env:
-  MYSQL_ROOT_PASSWORD: "123"
-  MYSQL_DATABASE: "web_cv"
+  DB_HOST: "sql-app"
+  DB_PORT: "3306"
+  DB_NAME: "web_cv"
+  DB_USER: "root"
+  DB_PASSWORD: "123"
