@@ -94,7 +94,7 @@ pipeline {
                             echo "Building and pushing image: ${img.image}"
                             try {
                                 sh """
-                                    docker build --network=host -t ${img.image} ${img.path}
+                                    docker build --no-cache --network=host -t ${img.image} ${img.path}
                                     docker push ${img.image}
                                 """
                                 echo "Successfully built and pushed: ${img.image}"
