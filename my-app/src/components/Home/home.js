@@ -98,7 +98,7 @@ function Home() {
                     </div>
                     <div className='content-left'>
                         <h2>New trending</h2>
-                        <h1>SNOW SOCKS</h1>
+                        <h1>SNOW SOCKSS</h1>
                         <h3>Gear up and ride in comfort this season with our latest winter-ready snow styles worn and tested by our Punk & Poet team.</h3>
                         <a> Shop now</a>
                     </div>
