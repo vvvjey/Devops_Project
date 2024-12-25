@@ -32,10 +32,3 @@ spec:
               value: "{{ .Values.env.DB_PASSWORD }}"
           ports:
             - containerPort: 3306
-          resources:
-            limits:
-              cpu: {{ .Values.resources.limits.cpu }}
-              memory: {{ .Values.resources.limits.memory }}
-            requests:
-              cpu: {{ .Values.resources.requests.cpu }}
-              memory: {{ .Values.resources.requests.memory }}
