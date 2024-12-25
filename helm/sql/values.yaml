@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: napeno/sql
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: LoadBalancer
+  port: 3306
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+env:
+  MYSQL_ROOT_PASSWORD: "123"
+  MYSQL_DATABASE: "web_cv"

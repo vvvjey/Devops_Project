@@ -86,6 +86,7 @@ pipeline {
                     script {
                         def images = [
                             [path: './Backend', image: 'napeno/backend:latest'],
+                            [path: './Sql', image: 'napeno/sql:latest'],
                             [path: './my-app', image: 'napeno/frontend:latest'],
                             // [path: './production/grafana/provisioning', image: 'napeno/grafana:latest']
                         ]
@@ -136,6 +137,13 @@ pipeline {
 
                        helm upgrade --install frontend-app ./helm/frontend \
                         --set image.repository=napeno/frontend \
+                        --set image.tag=latest \
+                        --set image.pullPolicy=Always \
+                        --set service.type=LoadBalancer \
+                        --force
+
+                        helm upgrade --install sql-app ./helm/sql \
+                        --set image.repository=napeno/sql \
                         --set image.tag=latest \
                         --set image.pullPolicy=Always \
                         --set service.type=LoadBalancer \
