@@ -9,6 +9,10 @@ service:
   type: LoadBalancer
   port: 3306
 
+serviceAccount:
+  create: true
+  name: sql-service-account
+
 resources:
   limits:
     cpu: 500m
