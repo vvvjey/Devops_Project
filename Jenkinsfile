@@ -85,7 +85,7 @@ pipeline {
                 withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') { 
                     script {
                         def branch = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-                        def tag = branch == 'main' ? 'latest' : branch
+                        def tag = branch == 'sha' ? 'latest' : branch
 
                         def images = [
                             [path: './Backend', image: "napeno/backend:${tag}"],
@@ -122,36 +122,36 @@ pipeline {
             }
         }
 
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         script {
-        //             echo 'Deploying application to Kubernetes'
-        //             sh '''
-        //                 helm upgrade --install backend-app ./helm/backend \
-        //                 --set image.repository=napeno/backend \
-        //                 --set image.tag=latest \
-        //                 --set image.pullPolicy=Always \
-        //                 --set service.type=LoadBalancer \
-        //                 --force
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    echo 'Deploying application to Kubernetes'
+                    sh '''
+                        helm upgrade --install backend-app ./helm/backend \
+                        --set image.repository=napeno/backend \
+                        --set image.tag=latest \
+                        --set image.pullPolicy=Always \
+                        --set service.type=LoadBalancer \
+                        --force
 
-        //                helm upgrade --install frontend-app ./helm/frontend \
-        //                 --set image.repository=napeno/frontend \
-        //                 --set image.tag=latest \
-        //                 --set image.pullPolicy=Always \
-        //                 --set service.type=LoadBalancer \
-        //                 --force
+                       helm upgrade --install frontend-app ./helm/frontend \
+                        --set image.repository=napeno/frontend \
+                        --set image.tag=latest \
+                        --set image.pullPolicy=Always \
+                        --set service.type=LoadBalancer \
+                        --force
 
-        //                 helm upgrade --install sql-app ./helm/sql \
-        //                 --set image.repository=napeno/sql \
-        //                 --set image.tag=latest \
-        //                 --set image.pullPolicy=Always \
-        //                 --set service.type=LoadBalancer \
-        //                 --force
-        //             '''
-        //             echo 'Deployment completed successfully'
-        //         }
-        //     }
-        // }
+                        helm upgrade --install sql-app ./helm/sql \
+                        --set image.repository=napeno/sql \
+                        --set image.tag=latest \
+                        --set image.pullPolicy=Always \
+                        --set service.type=LoadBalancer \
+                        --force
+                    '''
+                    echo 'Deployment completed successfully'
+                }
+            }
+        }
 
         stage('Validate Deployment') {
             steps {
