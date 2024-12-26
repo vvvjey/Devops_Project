@@ -6,7 +6,7 @@ import './livechat.scss';
 import socketIOClient from "socket.io-client";
 
 import {userChats,getMessage,addMessage} from '../../../services/userServices';
-const host = "http://137.184.250.129:80";
+const host = "http://144.126.243.132:80";
 
 function LiveChat() {
     let [userChatList,setUserChatList] = useState(null);

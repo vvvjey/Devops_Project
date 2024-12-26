@@ -7,7 +7,7 @@ import {getMessage,findChat,addMessage,createChat} from '../../../services/userS
 
 
 function LiveChat() {
-    const host = "http://137.184.250.129:80";
+    const host = "http://144.126.243.132:80";
     let [isChatBoxOpen,setIsChatBoxOpen] = useState(false);
     let [receiveMessage,setReceiveMessage] = useState(null);
     let [messagesChatBox,setMessagesChatBox] = useState(null);

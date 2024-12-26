@@ -32,7 +32,7 @@ app.use(bodyParser.json())
 
 
 const corsOptions = {
-    origin: ["http://137.184.250.129"],
+    origin: ["http://144.126.243.124"],
     credentials: true,
 };
 app.use(cors(corsOptions));
