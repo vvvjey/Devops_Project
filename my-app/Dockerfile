@@ -17,6 +17,10 @@ RUN npm run build
 # Tạo nginx image để chạy ứng dụng frontend
 FROM nginx:1.25
 
+# Thiết lập nhãn git-commit từ build argument
+ARG GIT_COMMIT
+LABEL git-commit=$GIT_COMMIT
+
 # Sao chép file build từ builder vào Nginx
 COPY --from=builder /usr/src/app/build /usr/share/nginx/html
 

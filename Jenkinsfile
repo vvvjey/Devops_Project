@@ -95,7 +95,7 @@ pipeline {
                             echo "Building and pushing image: ${img.image}"
                             try {
                                 sh """
-                                    docker build --no-cache --network=host -t ${img.image} ${img.path}
+                                    docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) --no-cache --network=host -t ${img.image} ${img.path}
                                     docker push ${img.image}
                                 """
                                 echo "Successfully built and pushed: ${img.image}"
@@ -123,36 +123,36 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    echo 'Deploying application to Kubernetes'
-                    sh '''
-                        helm upgrade --install backend-app ./helm/backend \
-                        --set image.repository=napeno/backend \
-                        --set image.tag=latest \
-                        --set image.pullPolicy=Always \
-                        --set service.type=LoadBalancer \
-                        --force
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         script {
+        //             echo 'Deploying application to Kubernetes'
+        //             sh '''
+        //                 helm upgrade --install backend-app ./helm/backend \
+        //                 --set image.repository=napeno/backend \
+        //                 --set image.tag=latest \
+        //                 --set image.pullPolicy=Always \
+        //                 --set service.type=LoadBalancer \
+        //                 --force
 
-                       helm upgrade --install frontend-app ./helm/frontend \
-                        --set image.repository=napeno/frontend \
-                        --set image.tag=latest \
-                        --set image.pullPolicy=Always \
-                        --set service.type=LoadBalancer \
-                        --force
+        //                helm upgrade --install frontend-app ./helm/frontend \
+        //                 --set image.repository=napeno/frontend \
+        //                 --set image.tag=latest \
+        //                 --set image.pullPolicy=Always \
+        //                 --set service.type=LoadBalancer \
+        //                 --force
 
-                        helm upgrade --install sql-app ./helm/sql \
-                        --set image.repository=napeno/sql \
-                        --set image.tag=latest \
-                        --set image.pullPolicy=Always \
-                        --set service.type=LoadBalancer \
-                        --force
-                    '''
-                    echo 'Deployment completed successfully'
-                }
-            }
-        }
+        //                 helm upgrade --install sql-app ./helm/sql \
+        //                 --set image.repository=napeno/sql \
+        //                 --set image.tag=latest \
+        //                 --set image.pullPolicy=Always \
+        //                 --set service.type=LoadBalancer \
+        //                 --force
+        //             '''
+        //             echo 'Deployment completed successfully'
+        //         }
+        //     }
+        // }
 
         stage('Validate Deployment') {
             steps {
