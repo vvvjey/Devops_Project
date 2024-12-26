@@ -6,7 +6,7 @@ import './chat.scss'
 import socketIOClient from "socket.io-client";
 
 import {userChats,getMessage,addMessage} from '../../services/userServices';
-const host = "http://144.126.243.132:80";
+const host = "http://164.90.254.39:80";
 
 
 // Test if conficts
