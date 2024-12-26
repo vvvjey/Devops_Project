@@ -19,8 +19,6 @@ serviceAccount:
   annotations:
     example.com/role: "frontend-role"
 
-gateway: frontend-gateway
-
 ingress:
   enabled: true
   className: nginx

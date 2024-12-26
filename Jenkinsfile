@@ -84,31 +84,29 @@ pipeline {
             steps {
                 withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') { 
                     script {
+                        def branch = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+                        def tag = branch == 'main' ? 'latest' : branch
+
                         def images = [
-                            [path: './Backend', image: 'napeno/backend:latest'],
-                            [path: './Sql', image: 'napeno/sql:latest'],
-                            [path: './my-app', image: 'napeno/frontend:latest'],
-                            // [path: './production/grafana/provisioning', image: 'napeno/grafana:latest']
+                            [path: './Backend', image: "napeno/backend:${tag}"],
+                            [path: './Sql', image: "napeno/sql:${tag}"],
+                            [path: './my-app', image: "napeno/frontend:${tag}"]
                         ]
-                        
+
                         for (img in images) {
-                            echo "Building and pushing image: ${img.image}"
-                            try {
+                            echo "Building and pushing image: ${img.image} from path: ${img.path}"
+                            retry(3) {
                                 sh """
                                     docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) --no-cache --network=host -t ${img.image} ${img.path}
                                     docker push ${img.image}
                                 """
-                                echo "Successfully built and pushed: ${img.image}"
-                            } catch (Exception e) {
-                                echo "Error occurred while building or pushing: ${img.image}"
-                                echo "Error: ${e.getMessage()}"
                             }
+                            echo "Successfully built and pushed: ${img.image}"
                         }
                     }
                 }
             }
         }
-
 
         stage('Snyk: Check Dockerfile Security') {
             steps {
