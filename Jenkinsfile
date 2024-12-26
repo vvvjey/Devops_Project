@@ -97,7 +97,7 @@ pipeline {
                             echo "Building and pushing image: ${img.image} from path: ${img.path}"
                             retry(3) {
                                 sh """
-                                    docker build --build-arg GIT_COMMIT=$(git rev-parse HEAD) --no-cache --network=host -t ${img.image} ${img.path}
+                                    docker build --build-arg GIT_COMMIT=\$(git rev-parse HEAD) --no-cache --network=host -t ${img.image} ${img.path}
                                     docker push ${img.image}
                                 """
                             }
@@ -107,6 +107,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Snyk: Check Dockerfile Security') {
             steps {
