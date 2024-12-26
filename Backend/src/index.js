@@ -32,10 +32,11 @@ app.use(bodyParser.json())
 
 
 const corsOptions = {
-    origin: ["http://144.126.243.124"],
-    credentials: true,
-};
-app.use(cors(corsOptions));
+    origin: '*', 
+    credentials: true, 
+  };
+  
+  app.use(cors(corsOptions));
 
 // app.use(function (req, res, next) {
 //     // Website you wish to allow to connect , this include http not only port of FrontEnd
