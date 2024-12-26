@@ -1,33 +1,33 @@
----
+# ---
 
-# Frontend Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend-service
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-    targetPort: 80
-  selector:
-    app: frontend
+# # Frontend Service
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: frontend-service
+# spec:
+#   type: LoadBalancer
+#   ports:
+#   - port: 80
+#     targetPort: 80
+#   selector:
+#     app: frontend
 
----
+# ---
 
-# Backend Service
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend-app
-spec:
-  selector:
-    app.kubernetes.io/instance: backend-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 5000
-  type: LoadBalancer
+# # Backend Service
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: backend-app
+# spec:
+#   selector:
+#     app.kubernetes.io/instance: backend-app
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 5000
+#   type: LoadBalancer
 
     
 ---

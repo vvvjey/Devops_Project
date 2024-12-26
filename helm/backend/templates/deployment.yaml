@@ -26,7 +26,7 @@ spec:
         - containerPort: 5000
         env:
         - name: DB_HOSTNAME
-          value: "mysql-database-service"
+          value: "146.190.201.154"
         - name: DB_PORT
           value: "3306"
         - name: DB_DATABASE

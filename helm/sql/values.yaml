@@ -13,8 +13,16 @@ serviceAccount:
   create: true
   name: sql-service-account
 
+tolerations:
+  - key: "node.cilium.io/agent-not-ready"
+    operator: "Exists"
+    effect: "NoExecute"
+  - key: "node.kubernetes.io/unreachable"
+    operator: "Exists"
+    effect: "NoExecute"
+
 env:
-  DB_HOST: "sql-app"
+  DB_HOST: "146.190.201.154"
   DB_PORT: "3306"
   DB_NAME: "web_cv"
   DB_USER: "root"
