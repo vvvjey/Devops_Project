@@ -18,7 +18,7 @@ function Home() {
     useEffect(() => {
         const fetchNewestProducts = async () => {
             try {
-                let response = await getFiveMostRatingProducts();
+                let response = await getFiveNewestProducts();
                 console.log('ré',response)
                 if(response.data.data.errCode == 0 ) {
                     setFiveNewestProducts(response.data.data.products)
