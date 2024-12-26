@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 var corsOptions = {
-  origin: "http://137.184.250.129:80",
+  origin: "*",
   credentials: true
 };
 app.use(cors(corsOptions));
