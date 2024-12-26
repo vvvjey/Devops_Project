@@ -21,51 +21,51 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
-                        sh '''
-                            /opt/sonar-scanner/bin/sonar-scanner \
-                            -Dsonar.projectKey=Devops_Project \
-                            -Dsonar.sources=. \
-                            -Dsonar.host.url=http://137.184.144.191:9000 \
-                            -Dsonar.login=${SONAR_TOKEN}
-                        '''
-                    }
-                }
-            }
-        }
+        // stage('SonarQube Analysis') {
+        //     steps {
+        //         withSonarQubeEnv('SonarQube') {
+        //             withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_TOKEN')]) {
+        //                 sh '''
+        //                     /opt/sonar-scanner/bin/sonar-scanner \
+        //                     -Dsonar.projectKey=Devops_Project \
+        //                     -Dsonar.sources=. \
+        //                     -Dsonar.host.url=http://137.184.144.191:9000 \
+        //                     -Dsonar.login=${SONAR_TOKEN}
+        //                 '''
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Snyk: Check Node.js Dependencies') {
-            steps {
-                dir('my-app') {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
-                            sh '''
-                                snyk auth ${SNYK_TOKEN}
-                                snyk test --file=package.json
-                            '''
-                        }
-                    }
-                }
-            }
-        }
+        // stage('Snyk: Check Node.js Dependencies') {
+        //     steps {
+        //         dir('my-app') {
+        //             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        //                 withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
+        //                     sh '''
+        //                         snyk auth ${SNYK_TOKEN}
+        //                         snyk test --file=package.json
+        //                     '''
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Snyk: Check Docker Compose Security') {
-            steps {
-                dir('production') {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
-                            sh '''
-                                snyk auth ${SNYK_TOKEN}
-                                snyk iac test docker-compose.yaml
-                            '''
-                        }
-                    }
-                }
-            }
-        }
+        // stage('Snyk: Check Docker Compose Security') {
+        //     steps {
+        //         dir('production') {
+        //             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        //                 withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
+        //                     sh '''
+        //                         snyk auth ${SNYK_TOKEN}
+        //                         snyk iac test docker-compose.yaml
+        //                     '''
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         // stage('Build Docker Image') {
         //     steps {

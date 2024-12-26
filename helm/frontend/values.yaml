@@ -12,6 +12,7 @@ service:
   type: LoadBalancer
   port: 80
 
+
 serviceAccount:
   create: true
   name: frontend-service-account
@@ -41,6 +42,6 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: 75
 
-
+virtualServiceName: frontend-virtualservice
 canaryTrafficWeight: 10
 stableTrafficWeight: 90
