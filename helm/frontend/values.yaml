@@ -12,7 +12,6 @@ service:
   type: LoadBalancer
   port: 80
 
-
 serviceAccount:
   create: true
   name: frontend-service-account

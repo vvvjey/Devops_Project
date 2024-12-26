@@ -1,15 +1,15 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: {{ .Values.virtualServiceName }}
+  name: frontend-virtualservice
 spec:
   hosts:
-    - "*"
+  - "napeno"  # Replace with your desired hostname
   http:
-    - route:
-        - destination:
-            host: {{ include "frontend.fullname" . }}-stable
-          weight: {{ .Values.stableTrafficWeight }}
-        - destination:
-            host: {{ include "frontend.fullname" . }}-canary
-          weight: {{ .Values.canaryTrafficWeight }}
+  - route:
+    - destination:
+        host: "{{ include "frontend.fullname" . }}-stable"
+        weight: 90 
+    - destination:
+        host: "{{ include "frontend.fullname" . }}-canary"
+        weight: 10  

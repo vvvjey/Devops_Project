@@ -1,17 +1,17 @@
-# ---
+---
 
-# # Frontend Service
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: frontend-service
-# spec:
-#   type: LoadBalancer
-#   ports:
-#   - port: 80
-#     targetPort: 80
-#   selector:
-#     app: frontend
+# Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: frontend
 
 # ---
 
@@ -30,19 +30,19 @@
 #   type: LoadBalancer
 
     
----
+# ---
 
-# Mysql
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-database-service
-spec:
-  type: LoadBalancer
-  ports:
-  - port: 3306
-    targetPort: 80
-  selector:
-    app: mysql
+# # Mysql
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: mysql-database-service
+# spec:
+#   type: LoadBalancer
+#   ports:
+#   - port: 3306
+#     targetPort: 80
+#   selector:
+#     app: mysql
 
 
