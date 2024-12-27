@@ -301,7 +301,7 @@ pipeline {
                 script {
                     echo 'Deploying application to Kubernetes'
                     sh """
-                        export KUBECONFIG=/root/.kube/config
+                        export KUBECONFIG=/var/lib/jenkins/.kube/config
 
                         helm upgrade --install backend-app ./helm/backend \
                         --set image.repository=napeno/backend \
