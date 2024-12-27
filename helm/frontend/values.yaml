@@ -8,7 +8,7 @@ image:
 service:
   type: LoadBalancer
   port: 80
-  targetPort: 3100
+  targetPort: 80
 
 deployment:
   labels:

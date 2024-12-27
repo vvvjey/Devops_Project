@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: {{ .Release.Name }}-frontend-rollout
+  name: frontend-rollout
   labels:
     app: {{ .Values.deployment.labels.app }}
 spec:
