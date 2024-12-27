@@ -69,11 +69,6 @@ function Home() {
                         showStatus={false}
                         showIndicators={false}
                     >
-                        <div className='pod-info'>
-                            <h2>Pod Information</h2>
-                            <p><strong>Pod Name:</strong> {podInfo.name}</p>
-                            <p><strong>Namespace:</strong> {podInfo.namespace}</p>
-                        </div>
                         <div>
                             <img src="https://stance.eu.com/cdn/shop/files/SP24_NewArrivalsLifestyleSocks_2024_HP_Desktop.jpg?v=1706697392&width=1100" />
                             {/* <p className="legend">Legend 1</p> */}
