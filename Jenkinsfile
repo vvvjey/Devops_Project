@@ -93,7 +93,46 @@ pipeline {
             }
         }
 
-        stage('Build and Push Docker Images') {
+        // stage('Build and Push Docker Images') {
+        //     steps {
+        //         withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') { 
+        //             script {
+        //                 def gitCommit = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+        //                 def timestamp = sh(returnStdout: true, script: 'date +"%Y%m%d%H%M%S"').trim()
+
+        //                 // Generate dynamic tags for each service
+        //                 def frontendTag = "frontend:${gitCommit}-${timestamp}"
+        //                 def backendTag = "backend:${gitCommit}-${timestamp}"
+        //                 def sqlTag = "sql:${gitCommit}-${timestamp}"
+
+        //                 // List of services to build and push
+        //                 def images = [
+        //                     [path: './Backend', image: "napeno/${backendTag}"],
+        //                     [path: './Sql', image: "napeno/${sqlTag}"],
+        //                     [path: './my-app', image: "napeno/${frontendTag}"]
+        //                 ]
+
+        //                 for (img in images) {
+        //                     echo "Building and pushing image: ${img.image} from path: ${img.path}"
+        //                     retry(3) {
+        //                         sh """
+        //                             docker build --build-arg GIT_COMMIT=${gitCommit} --no-cache --network=host -t ${img.image} ${img.path}
+        //                             docker push ${img.image}
+        //                         """
+        //                     }
+        //                     echo "Successfully built and pushed: ${img.image}"
+        //                 }
+
+        //                 // Set environment variables for the next stage
+        //                 env.FRONTEND_IMAGE_TAG = frontendTag
+        //                 env.BACKEND_IMAGE_TAG = backendTag
+        //                 env.SQL_IMAGE_TAG = sqlTag
+        //             }
+        //         }
+        //     }
+        // }
+
+        stage('Build and Test Docker Images') {
             steps {
                 withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') { 
                     script {
@@ -105,7 +144,7 @@ pipeline {
                         def backendTag = "backend:${gitCommit}-${timestamp}"
                         def sqlTag = "sql:${gitCommit}-${timestamp}"
 
-                        // List of services to build and push
+                        // List of services to build
                         def images = [
                             [path: './Backend', image: "napeno/${backendTag}"],
                             [path: './Sql', image: "napeno/${sqlTag}"],
@@ -113,14 +152,51 @@ pipeline {
                         ]
 
                         for (img in images) {
-                            echo "Building and pushing image: ${img.image} from path: ${img.path}"
+                            echo "Building image: ${img.image} from path: ${img.path}"
                             retry(3) {
                                 sh """
                                     docker build --build-arg GIT_COMMIT=${gitCommit} --no-cache --network=host -t ${img.image} ${img.path}
+                                """
+                            }
+                            echo "Successfully built: ${img.image}"
+
+                            // Test API if the service is backend
+                            if (img.image.contains("backend")) {
+                                echo "Testing the backend API..."
+                                sh """
+                                    docker run -d --name test-container -p 5000:5000 ${img.image}
+                                    sleep 10
+                                """
+                                try {
+                                    // Test the API and capture the response
+                                    def apiResponse = sh(returnStdout: true, script: """
+                                        curl -s http://localhost:5000/api/get-five-newest-products
+                                    """).trim()
+                                    echo "API Response: ${apiResponse}"
+
+                                    // Run Postman tests
+                                    sh """
+                                        newman run postman_collection.json \
+                                        --env-var "baseUrl=http://localhost:5000" \
+                                        --env-var "apiEndpoint=/api/get-five-newest-products"
+                                    """
+                                    echo "Backend API test passed successfully"
+                                } finally {
+                                    // Clean up the container
+                                    sh "docker rm -f test-container"
+                                }
+                            }
+                        }
+
+                        // Push the images to Docker Hub
+                        for (img in images) {
+                            echo "Pushing image: ${img.image}"
+                            retry(3) {
+                                sh """
                                     docker push ${img.image}
                                 """
                             }
-                            echo "Successfully built and pushed: ${img.image}"
+                            echo "Successfully pushed: ${img.image}"
                         }
 
                         // Set environment variables for the next stage
@@ -131,6 +207,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Deploy to Kubernetes') {
             steps {
