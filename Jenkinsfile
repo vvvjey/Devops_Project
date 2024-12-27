@@ -194,9 +194,9 @@ pipeline {
                         }
 
                         // Set environment variables for next stage
-                        env.FRONTEND_IMAGE_TAG = images.find { it.path == './my-app' }.image
-                        env.BACKEND_IMAGE_TAG = images.find { it.path == './Backend' }.image
-                        env.SQL_IMAGE_TAG = images.find { it.path == './Sql' }.image
+                        env.FRONTEND_IMAGE_TAG = images.find { it.path == './my-app' }.image.split(':')[1]
+                        env.BACKEND_IMAGE_TAG = images.find { it.path == './Backend' }.image.split(':')[1]
+                        env.SQL_IMAGE_TAG = images.find { it.path == './Sql' }.image.split(':')[1]
                     }
                 }
             }
