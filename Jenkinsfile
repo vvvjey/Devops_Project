@@ -237,7 +237,8 @@ pipeline {
                                 echo "Testing the backend API..."
                                try {
                                     sh """
-                                        docker run -d --name test-container \
+                                        docker ps -a --filter name=test-container --format "{{.ID}}" | xargs -r docker rm -f
+                                        docker run --init -d --name test-container \
                                         -p 5000:5000 \
                                         -e DB_HOSTNAME='146.190.184.196' \
                                         -e DB_PORT='3306' \
