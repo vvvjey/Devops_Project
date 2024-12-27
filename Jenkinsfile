@@ -216,11 +216,11 @@ pipeline {
                         def backendTag = "${gitCommit}-${timestamp}"
                         def sqlTag = "${gitCommit}-${timestamp}"
 
-                        // List of services to build
+                        // Corrected list of services to build
                         def images = [
-                            [path: './Backend', image: "napeno/sql:${backendTag}"],
-                            [path: './Sql', image: "napeno/backend:${sqlTag}"],
-                            [path: './my-app', image: "napeno/frontend:${frontendTag}"]
+                            [path: './Backend', image: "napeno/backend:${backendTag}"], // Correct backend path
+                            [path: './Sql', image: "napeno/sql:${sqlTag}"],           // Correct sql path
+                            [path: './my-app', image: "napeno/frontend:${frontendTag}"] // Correct frontend path
                         ]
 
                         for (img in images) {
@@ -235,9 +235,12 @@ pipeline {
                             // Test API if the service is backend
                             if (img.image.contains("backend")) {
                                 echo "Testing the backend API..."
-                               try {
+                                try {
                                     sh """
+                                        # Clean up any existing container with the same name
                                         docker ps -a --filter name=test-container --format "{{.ID}}" | xargs -r docker rm -f
+                                        
+                                        # Run backend container for testing
                                         docker run --init -d --name test-container \
                                         -p 5000:5000 \
                                         -e DB_HOSTNAME='146.190.184.196' \
@@ -247,32 +250,29 @@ pipeline {
                                         -e DB_USERNAME='root' \
                                         -e DB_PASSWORD='123' \
                                         ${img.image}
+                                        
+                                        # Wait for backend to start
                                         sleep 20
+                                        
                                         echo "Container logs:"
                                         docker logs test-container
                                     """
+                                    // Call the backend API
                                     def apiResponse = sh(returnStdout: true, script: """
                                         curl -s -w "\\nHTTP Status: %{http_code}" http://localhost:5000/api/get-five-newest-products
                                     """).trim()
                                     echo "API Response: ${apiResponse}"
-
-                                    // // Optional: Run Postman tests if needed
-                                    // sh """
-                                    //     docker run --rm \
-                                    //     -v \$(pwd):/etc/newman \
-                                    //     postman/newman:latest \
-                                    //     run postman_collection.json \
-                                    //     --env-var baseUrl=http://localhost:5000 \
-                                    //     --env-var apiEndpoint=/api/get-five-newest-products
-                                    // """
-
+                                    
+                                    // Ensure API response contains expected results
+                                    if (!apiResponse.contains("HTTP Status: 200")) {
+                                        error("API call failed with response: ${apiResponse}")
+                                    }
 
                                     echo "Backend API test passed successfully"
                                 } finally {
-                                    // Clean up the container
-                                    sh "docker rm -f test-container"
+                                    // Clean up the test container
+                                    sh "docker rm -f test-container || true"
                                 }
-
                             }
                         }
 
@@ -291,10 +291,15 @@ pipeline {
                         env.FRONTEND_IMAGE_TAG = frontendTag
                         env.BACKEND_IMAGE_TAG = backendTag
                         env.SQL_IMAGE_TAG = sqlTag
+
+                        echo "FRONTEND_IMAGE_TAG: ${env.FRONTEND_IMAGE_TAG}"
+                        echo "BACKEND_IMAGE_TAG: ${env.BACKEND_IMAGE_TAG}"
+                        echo "SQL_IMAGE_TAG: ${env.SQL_IMAGE_TAG}"
                     }
                 }
             }
         }
+
 
 
         stage('Deploy to Kubernetes') {
