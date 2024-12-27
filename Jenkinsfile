@@ -212,15 +212,15 @@ pipeline {
                         def timestamp = sh(returnStdout: true, script: 'date +"%Y%m%d%H%M%S"').trim()
 
                         // Generate dynamic tags for each service
-                        def frontendTag = "frontend:${gitCommit}-${timestamp}"
-                        def backendTag = "backend:${gitCommit}-${timestamp}"
-                        def sqlTag = "sql:${gitCommit}-${timestamp}"
+                        def frontendTag = "${gitCommit}-${timestamp}"
+                        def backendTag = "${gitCommit}-${timestamp}"
+                        def sqlTag = "${gitCommit}-${timestamp}"
 
                         // List of services to build
                         def images = [
-                            [path: './Backend', image: "napeno/${backendTag}"],
-                            [path: './Sql', image: "napeno/${sqlTag}"],
-                            [path: './my-app', image: "napeno/${frontendTag}"]
+                            [path: './Backend', image: "napeno/sql:${backendTag}"],
+                            [path: './Sql', image: "napeno/backend:${sqlTag}"],
+                            [path: './my-app', image: "napeno/frontend:${frontendTag}"]
                         ]
 
                         for (img in images) {
