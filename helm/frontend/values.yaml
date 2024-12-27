@@ -22,13 +22,14 @@ rollout:
     canary:
       steps:
         - setWeight: 20
-          pause: {}
+        - pause: {}
         - setWeight: 40
-          pause:
+        - pause:
             duration: 10
         - setWeight: 60
-          pause:
+        - pause:
             duration: 10
         - setWeight: 80
-          pause:
+        - pause:
             duration: 10
+
