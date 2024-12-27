@@ -163,19 +163,19 @@ pipeline {
                             // Test API if the service is backend
                             if (img.image.contains("backend")) {
                                 echo "Testing the backend API..."
-                                sh """
-                                    docker run -d --name test-container -p 5000:5000 ${img.image}
-                                    sleep 30
-                                """
-                                try {
-                                    // Test the API and capture the response
+                               try {
+                                    sh """
+                                        docker run -d --name test-container -p 5000:5000 ${img.image}
+                                        sleep 20
+                                        echo "Container logs:"
+                                        docker logs test-container
+                                    """
                                     def apiResponse = sh(returnStdout: true, script: """
                                         curl -s -w "\\nHTTP Status: %{http_code}" http://localhost:5000/api/get-five-newest-products
                                     """).trim()
                                     echo "API Response: ${apiResponse}"
 
-
-                                    // Run Postman tests
+                                    // Optional: Run Postman tests if needed
                                     sh """
                                         newman run postman_collection.json \
                                         --env-var "baseUrl=http://localhost:5000" \
@@ -186,6 +186,7 @@ pipeline {
                                     // Clean up the container
                                     sh "docker rm -f test-container"
                                 }
+
                             }
                         }
 
