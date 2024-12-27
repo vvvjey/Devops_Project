@@ -165,7 +165,15 @@ pipeline {
                                 echo "Testing the backend API..."
                                try {
                                     sh """
-                                        docker run -d --name test-container -p 5000:5000 ${img.image}
+                                        docker run -d --name test-container \
+                                        -p 5000:5000 \
+                                        -e DB_HOSTNAME='146.190.184.196' \
+                                        -e DB_PORT='3306' \
+                                        -e DB_DIALECT='mysql' \
+                                        -e DB_DATABASE='web_cv' \
+                                        -e DB_USERNAME='root' \
+                                        -e DB_PASSWORD='123' \
+                                        ${img.image}
                                         sleep 20
                                         echo "Container logs:"
                                         docker logs test-container
