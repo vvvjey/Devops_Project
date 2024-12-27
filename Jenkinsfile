@@ -151,6 +151,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Canary Rollout') {
+            steps {
+                script {
+                    echo 'Initiating Canary Deployment'
+                    sh '''
+                        kubectl argo rollouts set image frontend-rollout frontend=napeno/frontend:latest
+                        kubectl argo rollouts get rollout frontend-rollout
+                        kubectl argo rollouts promote frontend-rollout
+                    '''
+                }
+            }
+        }
         
         stage('Validate Deployment') {
             steps {
