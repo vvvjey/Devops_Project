@@ -75,9 +75,9 @@ pipeline {
                         script {
                             // Define the paths to Dockerfiles
                             def dockerfilePaths = [
-                                'my-app/Dockerfile',
-                                'Backend/Dockerfile',
-                                'Sql/Dockerfile'
+                                './my-app/Dockerfile',
+                                './Backend/Dockerfile',
+                                './Sql/Dockerfile'
                             ]
 
                             // Loop through each Dockerfile and run Snyk test
@@ -94,45 +94,6 @@ pipeline {
             }
         }
 
-
-        stage('Build and Push Docker Images') {
-            steps {
-                withDockerRegistry(credentialsId: 'docker_jenkins', url: 'https://index.docker.io/v1/') { 
-                    script {
-                        def gitCommit = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-                        def timestamp = sh(returnStdout: true, script: 'date +"%Y%m%d%H%M%S"').trim()
-
-                        // Generate dynamic tags for each service
-                        def frontendTag = "frontend:${gitCommit}-${timestamp}"
-                        def backendTag = "backend:${gitCommit}-${timestamp}"
-                        def sqlTag = "sql:${gitCommit}-${timestamp}"
-
-                        // List of services to build and push
-                        def images = [
-                            [path: './Backend', image: "napeno/${backendTag}"],
-                            [path: './Sql', image: "napeno/${sqlTag}"],
-                            [path: './my-app', image: "napeno/${frontendTag}"]
-                        ]
-
-                        for (img in images) {
-                            echo "Building and pushing image: ${img.image} from path: ${img.path}"
-                            retry(3) {
-                                sh """
-                                    docker build --build-arg GIT_COMMIT=${gitCommit} --no-cache --network=host -t ${img.image} ${img.path}
-                                    docker push ${img.image}
-                                """
-                            }
-                            echo "Successfully built and pushed: ${img.image}"
-                        }
-
-                        // Set environment variables for the next stage
-                        env.FRONTEND_IMAGE_TAG = frontendTag
-                        env.BACKEND_IMAGE_TAG = backendTag
-                        env.SQL_IMAGE_TAG = sqlTag
-                    }
-                }
-            }
-        }
 
         stage('Build and Test Docker Images') {
             steps {
