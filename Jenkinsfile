@@ -99,7 +99,7 @@ pipeline {
                 script {
                     // Define images to fetch tags
                     def images = [
-                        'napeno/my-app',
+                        'napeno/frontend',
                         'napeno/backend',
                         'napeno/sql'
                     ]
