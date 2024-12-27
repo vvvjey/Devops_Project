@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: argo-rollouts
+  namespace: argo-rollouts
+spec:
+  selector:
+    app: argo-rollouts
+  ports:
+    - protocol: TCP
+      port: 3100
+      targetPort: 3100

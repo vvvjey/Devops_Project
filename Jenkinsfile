@@ -121,36 +121,6 @@ pipeline {
             }
         }
 
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         script {
-        //             echo 'Deploying application to Kubernetes'
-        //             sh '''
-        //                 helm upgrade --install backend-app ./helm/backend \
-        //                 --set image.repository=napeno/backend \
-        //                 --set image.tag=latest \
-        //                 --set image.pullPolicy=Always \
-        //                 --set service.type=LoadBalancer \
-        //                 --force
-
-        //                helm upgrade --install frontend-app ./helm/frontend \
-        //                 --set image.repository=napeno/frontend \
-        //                 --set image.tag=latest \
-        //                 --set image.pullPolicy=Always \
-        //                 --set service.type=LoadBalancer \
-        //                 --force
-
-        //                 helm upgrade --install sql-app ./helm/sql \
-        //                 --set image.repository=napeno/sql \
-        //                 --set image.tag=latest \
-        //                 --set image.pullPolicy=Always \
-        //                 --set service.type=LoadBalancer \
-        //                 --force
-        //             '''
-        //             echo 'Deployment completed successfully'
-        //         }
-        //     }
-        // }
         stage('Deploy to Kubernetes') {
             steps {
                 script {
@@ -158,6 +128,13 @@ pipeline {
                     sh '''
                         helm upgrade --install backend-app ./helm/backend \
                         --set image.repository=napeno/backend \
+                        --set image.tag=latest \
+                        --set image.pullPolicy=Always \
+                        --set service.type=LoadBalancer \
+                        --force
+
+                       helm upgrade --install frontend-app ./helm/frontend \
+                        --set image.repository=napeno/frontend \
                         --set image.tag=latest \
                         --set image.pullPolicy=Always \
                         --set service.type=LoadBalancer \
@@ -174,7 +151,7 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Validate Deployment') {
             steps {
                 script {

@@ -3,12 +3,11 @@ kind: Service
 metadata:
   name: frontend-service
   labels:
-    app: frontend
+    app: {{ .Values.deployment.labels.app }}
 spec:
-  selector:
-    app: frontend
-  ports:
-    - protocol: TCP
-      port: {{ .Values.service.port }}
-      targetPort: 80
   type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+  selector:
+    app: {{ .Values.deployment.labels.app }}
