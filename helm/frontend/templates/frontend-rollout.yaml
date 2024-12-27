@@ -3,7 +3,7 @@ kind: Rollout
 metadata:
   name: frontend-rollout
   labels:
-    app: {{ .Values.deployment.labels.app }}
+    app: frontend-rollout
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
