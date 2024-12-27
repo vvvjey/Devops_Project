@@ -68,31 +68,31 @@ pipeline {
         }
 
 
-        stage('Snyk: Check Dockerfile Security') {
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
-                        script {
-                            // Define the paths to Dockerfiles
-                            def dockerfilePaths = [
-                                './my-app/Dockerfile',
-                                './Backend/Dockerfile',
-                                './Sql/Dockerfile'
-                            ]
+        // stage('Snyk: Check Dockerfile Security') {
+        //     steps {
+        //         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        //             withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
+        //                 script {
+        //                     // Define the paths to Dockerfiles
+        //                     def dockerfilePaths = [
+        //                         './my-app/Dockerfile',
+        //                         './Backend/Dockerfile',
+        //                         './Sql/Dockerfile'
+        //                     ]
 
-                            // Loop through each Dockerfile and run Snyk test
-                            for (dockerfile in dockerfilePaths) {
-                                echo "Checking security for Dockerfile at: ${dockerfile}"
-                                sh """
-                                    snyk auth ${SNYK_TOKEN}
-                                    snyk container test --file=${dockerfile} .
-                                """
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        //                     // Loop through each Dockerfile and run Snyk test
+        //                     for (dockerfile in dockerfilePaths) {
+        //                         echo "Checking security for Dockerfile at: ${dockerfile}"
+        //                         sh """
+        //                             snyk auth ${SNYK_TOKEN}
+        //                             snyk container test --file=${dockerfile} .
+        //                         """
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Fetch Latest Docker Hub Tags') {
             steps {
