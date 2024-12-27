@@ -340,7 +340,7 @@ pipeline {
                 script {
                     echo 'Initiating Canary Deployment'
                     sh """
-                        kubectl argo rollouts set image frontend-rollout frontend=napeno/${FRONTEND_IMAGE_TAG}
+                        kubectl argo rollouts set image frontend-rollout frontend=napeno/frontend:${FRONTEND_IMAGE_TAG}
                         kubectl argo rollouts promote frontend-rollout
                     """
                 }
