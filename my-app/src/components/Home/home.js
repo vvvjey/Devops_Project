@@ -11,6 +11,10 @@ import LiveChat from './LiveChat/livechat';
 import {getFiveNewestProducts,getFiveMostRatingProducts} from '../../services/userServices'
 function Home() {
 
+    const [podInfo, setPodInfo] = useState({
+        name: process.env.REACT_APP_POD_NAME || "Unknown Pod",
+        namespace: process.env.REACT_APP_POD_NAMESPACE || "Unknown Namespace",
+    });
     const counter = useSelector((state) => state.counterReducer.count);
     const dispatch = useDispatch();
     const [fiveNewestProducts,setFiveNewestProducts] = useState(null)
@@ -65,6 +69,11 @@ function Home() {
                         showStatus={false}
                         showIndicators={false}
                     >
+                        <div className='pod-info'>
+                            <h2>Pod Information</h2>
+                            <p><strong>Pod Name:</strong> {podInfo.name}</p>
+                            <p><strong>Namespace:</strong> {podInfo.namespace}</p>
+                        </div>
                         <div>
                             <img src="https://stance.eu.com/cdn/shop/files/SP24_NewArrivalsLifestyleSocks_2024_HP_Desktop.jpg?v=1706697392&width=1100" />
                             {/* <p className="legend">Legend 1</p> */}

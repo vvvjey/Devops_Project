@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary-svc
+  labels:
+    app: canary
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      name: http
+      targetPort: http
+  selector:
+    app: canary
+    
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: canary
+  labels:
+    app: canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: canary
+  template:
+    metadata:
+      labels:
+        app: canary
+    spec:
+      containers:
+        - name: canary
+          image: napeno/frontend:latest
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+          - name: REACT_APP_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: REACT_APP_POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"

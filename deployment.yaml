@@ -20,72 +20,72 @@ spec:
           ports:
             - containerPort: 80
 
-# ---
-# # Backend Deployment
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: backend
-#   labels:
-#     app: backend
-# spec:
-#   replicas: 2
-#   selector:
-#     matchLabels:
-#       app: backend
-#   template:
-#     metadata:
-#       labels:
-#         app: backend
-#     spec:
-#       containers:
-#         - name: backend
-#           image: napeno/backend:latest
-#           ports:
-#             - containerPort: 5000
-#           env:
-#             - name: DB_HOSTNAME
-#               value: "146.190.201.154"
-#             - name: DB_PORT
-#               value: "3306"
-#             - name: DB_DATABASE
-#               value: "web_cv"
-#             - name: DB_USERNAME
-#               value: "root"
-#             - name: DB_PASSWORD
-#               value: "123"
-#             - name: DB_DIALECT
-#               value: "mysql"
+---
+# Backend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: napeno/backend:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_HOSTNAME
+              value: "146.190.201.154"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_DATABASE
+              value: "web_cv"
+            - name: DB_USERNAME
+              value: "root"
+            - name: DB_PASSWORD
+              value: "123"
+            - name: DB_DIALECT
+              value: "mysql"
 
-# ---
-# # Mysql Deployment
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: mysql
-#   labels:
-#     app: mysql
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: mysql
-#   template:
-#     metadata:
-#       labels:
-#         app: mysql
-#     spec:
-#       containers:
-#         - name: mysql
-#           image: napeno/sql:latest
-#           ports:
-#             - containerPort: 3306
-#           env:
-#             - name: MYSQL_ROOT_PASSWORD
-#               value: "123"
-#             - name: MYSQL_DATABASE
-#               value: "web_cv"
-#             - name: MYSQL_USER
-#               value: "user"
-#             - name: MYSQL_PASSWORD
-#               value: "password"
+---
+# Mysql Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: napeno/sql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "123"
+            - name: MYSQL_DATABASE
+              value: "web_cv"
+            - name: MYSQL_USER
+              value: "user"
+            - name: MYSQL_PASSWORD
+              value: "password"

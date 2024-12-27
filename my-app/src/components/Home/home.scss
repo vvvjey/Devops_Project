@@ -88,5 +88,23 @@
                 cursor: pointer;
             }
         }
+        .pod-info {
+            padding: 10px;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: left;
+        
+            h2 {
+                margin-bottom: 10px;
+            }
+        
+            p {
+                margin: 5px 0;
+                font-size: 14px;
+            }
+        }
+        
     }
 }
