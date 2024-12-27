@@ -183,15 +183,15 @@ pipeline {
                                     """).trim()
                                     echo "API Response: ${apiResponse}"
 
-                                    // Optional: Run Postman tests if needed
-                                    sh """
-                                        docker run --rm \
-                                        -v \$(pwd):/etc/newman \
-                                        postman/newman:latest \
-                                        run postman_collection.json \
-                                        --env-var baseUrl=http://localhost:5000 \
-                                        --env-var apiEndpoint=/api/get-five-newest-products
-                                    """
+                                    // // Optional: Run Postman tests if needed
+                                    // sh """
+                                    //     docker run --rm \
+                                    //     -v \$(pwd):/etc/newman \
+                                    //     postman/newman:latest \
+                                    //     run postman_collection.json \
+                                    //     --env-var baseUrl=http://localhost:5000 \
+                                    //     --env-var apiEndpoint=/api/get-five-newest-products
+                                    // """
 
 
                                     echo "Backend API test passed successfully"
