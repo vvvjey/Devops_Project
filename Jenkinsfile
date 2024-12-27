@@ -165,14 +165,15 @@ pipeline {
                                 echo "Testing the backend API..."
                                 sh """
                                     docker run -d --name test-container -p 5000:5000 ${img.image}
-                                    sleep 10
+                                    sleep 30
                                 """
                                 try {
                                     // Test the API and capture the response
                                     def apiResponse = sh(returnStdout: true, script: """
-                                        curl -s http://localhost:5000/api/get-five-newest-products
+                                        curl -s -w "\\nHTTP Status: %{http_code}" http://localhost:5000/api/get-five-newest-products
                                     """).trim()
                                     echo "API Response: ${apiResponse}"
+
 
                                     // Run Postman tests
                                     sh """
