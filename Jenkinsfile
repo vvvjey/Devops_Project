@@ -169,8 +169,6 @@ pipeline {
                     echo 'Initiating Canary Deployment'
                     sh """
                         kubectl argo rollouts set image frontend-rollout frontend=napeno/${FRONTEND_IMAGE_TAG}
-                        kubectl argo rollouts set image backend-rollout backend=napeno/${BACKEND_IMAGE_TAG}
-                        kubectl argo rollouts set image sql-rollout sql=napeno/${SQL_IMAGE_TAG}
                         kubectl argo rollouts promote frontend-rollout
                         kubectl argo rollouts promote backend-rollout
                         kubectl argo rollouts promote sql-rollout
