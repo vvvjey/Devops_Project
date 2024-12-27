@@ -1,3 +1,4 @@
+{{- if .Values.useRollout }} # Kiểm tra giá trị useRollout trong values.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
@@ -31,3 +32,4 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.targetPort }}
+{{- end }}
