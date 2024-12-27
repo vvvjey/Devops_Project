@@ -185,10 +185,14 @@ pipeline {
 
                                     // Optional: Run Postman tests if needed
                                     sh """
-                                        newman run postman_collection.json \
-                                        --env-var "baseUrl=http://localhost:5000" \
-                                        --env-var "apiEndpoint=/api/get-five-newest-products"
+                                        docker run --rm \
+                                        -v $(pwd):/etc/newman \
+                                        postman/newman:latest \
+                                        run postman_collection.json \
+                                        --env-var baseUrl=http://localhost:5000 \
+                                        --env-var apiEndpoint=/api/get-five-newest-products
                                     """
+
                                     echo "Backend API test passed successfully"
                                 } finally {
                                     // Clean up the container
