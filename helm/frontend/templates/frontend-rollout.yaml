@@ -1,30 +1,22 @@
-{{- if .Values.useRollout }} # Kiểm tra giá trị useRollout trong values.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: frontend-rollout
   labels:
-    app: {{ .Values.deployment.labels.app }}
+    app: frontend-rollout
 spec:
   replicas: {{ .Values.replicaCount }}
   strategy:
     canary:
       steps:
-      - setWeight: 20
-      - pause: {}
-      - setWeight: 40
-      - pause: {duration: 10}
-      - setWeight: 60
-      - pause: {duration: 10}
-      - setWeight: 80
-      - pause: {duration: 10}
+{{ toYaml .Values.rollout.strategy.canary.steps | indent 8 }}
   selector:
     matchLabels:
-      app: {{ .Values.deployment.labels.app }}
+      app: frontend-rollout
   template:
     metadata:
       labels:
-        app: {{ .Values.deployment.labels.app }}
+        app: frontend-rollout
     spec:
       containers:
         - name: frontend
@@ -32,4 +24,3 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.targetPort }}
-{{- end }}
