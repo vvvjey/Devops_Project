@@ -1,6 +1,8 @@
-# **E-Commerce Order Management System**
-
+# **E-Commerce Order Management System - Devops **
 This repository showcases a comprehensive **E-Commerce Order Management System** with robust scalability, high availability, and modern DevOps practices. The project focuses on **seamless order processing during peak traffic**, while ensuring no orders are lost, maintaining order consistency, and enabling future expansion.
+## **Team Members**
+- **Hoàng Văn Tú**
+- **Nguyễn Sơn Hà**
 
 ---
 ![image](https://github.com/user-attachments/assets/48f6e5f3-d6c3-4db7-95a5-42e95e3e6c0e)
